@@ -1,0 +1,40 @@
+CREATE PROCEDURE [dbo].[ADD_ORDER]    
+	@CustomerID INT
+	@OrderTxnType INT
+	@OrderTotalAmt DECIMAL (20, 6)
+	@OrderNetAmt DECIMAL (20, 6)
+	@OrderDepositAmt DECIMAL (20, 6)
+	@DELETED BIT
+	@UpdatedDateTime DATETIME
+	@UpdatedBy NVARCHAR (255)
+	
+AS    
+    BEGIN    
+ DECLARE @ID as BIGINT  
+        INSERT  INTO [Order]    
+                (CustomerID,
+				OrderTxnType,
+				OrderTotalAmt,
+				OrderNetAmt,
+				OrderDepositAmt,
+				DELETED,
+				UpdatedDateTime,
+				UpdatedBy
+             )    
+        VALUES  (@CustomerID,
+		         @OrderTxnType,
+		         @OrderTotalAmt,
+                 @OrderNetAmt,
+                 @OrderDepositAmt,
+                 @DELETED,
+                 @UpdatedDateTime,
+                 @UpdatedBy
+             );   
+		SET @ID = SCOPE_IDENTITY();   
+        SELECT  @ID AS ID;    
+    END;   
+GO
+
+
+
+

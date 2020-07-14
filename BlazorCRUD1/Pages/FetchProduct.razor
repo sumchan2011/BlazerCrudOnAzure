@@ -1,0 +1,462 @@
+﻿@page "/productlist"
+@inject IProductManager productManager
+@inject IStockManager stockManager
+@inject IStringLocalizer<FetchProduct> localizer
+@inject IModalService Modal
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+    .sort-th {
+        cursor: pointer;
+    }
+
+    .btn-custom {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 2px solid #000;
+        margin: 0px 5px 0px 5px;
+    }
+
+    .myDiv {
+        border: 5px outset red;
+        background-color: lightblue;
+        text-align: center;
+    }
+</style>
+
+<div>
+    <a class="btn btn-primary" href='/addProduct'>@localizer["addNewProduct"]</a>
+</div>
+<br />
+
+@if (productModel == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <div class="search-wrapper">
+        <div class="search-title"><i class="fas fa-filter"></i>@localizer["filter"]</div>
+        <form id="list-table-search-form" class="search-form" action="/receipt/export" method="post">
+            <div class="form-row">
+
+                <div class="form-group col-md-2">
+                    <label for="productName">@localizer["productName"]</label>
+                    <input id="productName" name="productName" type="text" @bind="productName" @bind:event="oninput" class="form-control">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="productOrigin">@localizer["productOrigin"]</label>
+                    <input id="productOrigin" name="productOrigin" type="text" @bind="productOrigin" @bind:event="oninput" class="form-control">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="minAmt">@localizer["productPrice"]</label>
+                    <div class="input-group input-amtrange">
+                        <input id="minAmt" name="minAmt" type="text" @bind="lowerAmt" @bind:event="oninput" class="form-control">
+                        <div class="input-group-between">
+                            <div class="input-group-text">@localizer["to"]</div>
+                        </div>
+                        <input id="maxAmt" name="maxAmt" type="text" @bind="upperAmt" @bind:event="oninput" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2"></div>
+                <div class="form-group col text-right">
+                    <a class="btn btn-wide btn-outline-secondary" @onclick="() => FilterClear()">@localizer["clear"]</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="sort-th" @onclick="@(() => SortTable("ID"))">
+                    @localizer["ID"]
+                    <span class="fa @(SetSortIcon("ID"))"></span>
+                </th>
+                <th class="sort-th" @onclick="@(() => SortTable("ProductName"))">
+                    @localizer["productName"]
+                    <span class="fa @(SetSortIcon("ProductName"))"></span>
+                </th>
+
+                <th class="sort-th" @onclick="@(() => SortTable("ProductOrigin"))">
+                    @localizer["productOrigin"]
+                    <span class="fa @(SetSortIcon("ProductOrigin"))"></span>
+                </th>
+
+                <th class="sort-th" @onclick="@(() => SortTable("ProductPrice"))">
+                    @localizer["productPrice"]
+                    <span class="fa @(SetSortIcon("ProductPrice"))"></span>
+                </th>
+
+                <th class="sort-th" @onclick="@(() => SortTable("TotalStock"))">
+                    @localizer["totalStock"]
+                    <span class="fa @(SetSortIcon("totalStock"))"></span>
+                </th>
+
+                <th class="sort-th" @onclick="@(() => SortTable("ProductDetails"))">
+                    @localizer["productDetails"]
+                    <span class="fa @(SetSortIcon("ProductDetails"))"></span>
+                </th>
+
+                <th>@localizer["action"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (productModel == null || productModel.Count == 0)
+            {
+                <tr><td colspan="6">@localizer["noProduct"]</td></tr>
+            }
+            else
+            {
+                foreach (var product in productModel)
+                {
+                    <tr>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ID</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductName</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductOrigin</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductPrice</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductTotalStock</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductDetails</td>
+                        <td>
+                            <!-- <a class="btn btn-primary" href='/editProduct/@product.ID'>@localizer["edit"]</a>-->
+                            <a class="btn btn-primary" @onclick="() => EditProductDialog(product)">@localizer["edit"]</a>
+                            <a class="btn btn-danger" @onclick="() => DeleteProductDialog(product)">@localizer["delete"]</a>
+                        </td>
+                    </tr>
+                    @if (stockModel == null || stockModel.Count == 0)
+                    {
+                        if (product.ID == selectedindex)
+                        {
+                            <tr data-toggle="collapse" class="@NavMenuCssClass"><td colspan="6">No Stock to display</td></tr>
+                        }
+                    }
+                    else
+                    {
+
+                        if (product.ID == stockModel[0].ProductID)
+                        {
+                            //use css/style to complete a box 
+                            <div class="myDiv">
+                                <tr data-toggle="collapse" class="@NavMenuCssClass ">
+                                    <th>Stock QTY</th>
+                                    <th>Stock Cost</th>
+                                    <th>Stock Date</th>
+                                </tr>
+                                @{
+                                    foreach (var stock in stockModel)
+                                    {
+                                        <tr data-toggle="collapse" class="@NavMenuCssClass">
+                                            <td>@stock.StockQty</td>
+                                            <td>@stock.StockCost</td>
+                                            <td>@stock.UpdatedDateTime</td>
+                                        </tr>
+                                    }
+                                }
+
+                                <a class="btn btn-primary">@localizer["inStock"]</a>
+                            </div>
+                        }
+                    }
+                }
+            }
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("previous"))>@localizer["prev"]</button>
+
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            var currentPage = i;
+            <button class="btn btn-custom pagebutton @(currentPage==curPage?"btn-danger":"")" @onclick=@(async () =>await refreshRecords(currentPage))>
+                @currentPage
+            </button>
+        }
+
+        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("next"))>@localizer["next"]</button>
+
+    </div>
+}
+
+
+@code {
+    List<Product> productModel;
+    List<Stock> stockModel;
+    Product productEntity = new Product();
+    Stock stockEntity = new Stock();
+
+    #region Pagination
+    int totalPages;
+    int totalRecords;
+    int curPage;
+    int pagerSize;
+    int pageSize;
+    int startPage;
+    int endPage;
+
+
+    string sortColumnName = "P.ID";
+    string sortDir = "DESC";
+    int selectedindex;
+    bool collapseNavMenu = true;
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    //On data to seach.
+    string searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt;
+
+    //On bind variable
+    string productName
+    {
+        get { return searchProuctName; }
+        set
+        {
+            searchProuctName = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    string productOrigin
+    {
+        get { return searchProductOrigin; }
+        set
+        {
+            searchProductOrigin = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    string lowerAmt
+    {
+        get { return searchLowerAmt; }
+        set
+        {
+            searchLowerAmt = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    string upperAmt
+    {
+        get { return searchUpperAmt; }
+        set
+        {
+            searchUpperAmt = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    #endregion
+
+    public async void ToggleTableTr(int prod_id)
+    {
+        selectedindex = prod_id;
+        collapseNavMenu = !collapseNavMenu;
+        stockModel = await stockManager.SimpleListAll(prod_id);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //display total page buttons
+        pagerSize = 3;
+        pageSize = 5;
+        curPage = 1;
+        productModel = await productManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
+        totalRecords = await productManager.Count(productName);
+        totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
+        SetPagerSize("forward");
+    }
+
+    public async void DeleteProductDialog(Product product)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(product), product);
+
+        var formModal = Modal.Show<DeleteProduct>(localizer["deleteProduct"], parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+        }
+        else
+        {
+            DeleteProduct((Product)result.Data).Wait();
+        }
+    }
+
+    public async void EditProductDialog(Product product)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(product), product);
+
+        var formModal = Modal.Show<EditProduct>(localizer["editProduct"], parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            UpdateProduct((Product)result.Data).Wait();
+        }
+    }
+
+    protected async Task DeleteProduct(Product product)
+    {
+        await productManager.Delete(product);
+        FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        StateHasChanged();
+    }
+
+    protected async Task UpdateProduct(Product product)
+    {
+        await productManager.Update(product, false);
+        FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        StateHasChanged();
+    }
+
+    protected async Task FilterProduct(String name, String origin, String lowerAmt, String upperAmt)
+    {
+        if (String.IsNullOrEmpty(lowerAmt))
+            lowerAmt = "0";
+
+        if (String.IsNullOrEmpty(upperAmt))
+            upperAmt = "10000000000000000000000";
+
+        productModel = await productManager.ListFilterAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir, name, origin, Double.Parse(lowerAmt), Double.Parse(upperAmt));
+    }
+
+    protected void FilterClear()
+    {
+        this.productName = null;
+        this.productOrigin = null;
+        this.lowerAmt = null;
+        this.upperAmt = null;
+    }
+
+    public async Task GetTotalStockByProductID(int productID)
+    {
+        await stockManager.GetTotalStockByProductID(productID);
+    }
+
+    private bool isSortedAscending;
+    private string activeSortColumn;
+
+    private async Task<List<Product>> SortRecords(string columnName, string dir)
+    {
+        return await productManager.ListAll((curPage - 1) * pageSize, pageSize, columnName, dir, productName);
+    }
+
+    private async Task SortTable(string columnName)
+    {
+        if (columnName != activeSortColumn)
+        {
+            productModel = await SortRecords(columnName, "ASC");
+            isSortedAscending = true;
+            activeSortColumn = columnName;
+        }
+        else
+        {
+            if (isSortedAscending)
+            {
+                productModel = await SortRecords(columnName, "DESC");
+            }
+            else
+            {
+                productModel = await SortRecords(columnName, "ASC");
+            }
+
+            isSortedAscending = !isSortedAscending;
+        }
+        sortColumnName = columnName;
+        sortDir = isSortedAscending ? "ASC" : "DESC";
+    }
+
+    private string SetSortIcon(string columnName)
+    {
+        if (activeSortColumn != columnName)
+        {
+            return string.Empty;
+        }
+        if (isSortedAscending)
+        {
+            return "fa-sort-up";
+        }
+        else
+        {
+            return "fa-sort-down";
+        }
+    }
+
+    public async Task refreshRecords(int currentPage)
+    {
+        productModel = await productManager.ListAll((currentPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
+        curPage = currentPage;
+        this.StateHasChanged();
+    }
+
+    public void SetPagerSize(string direction)
+    {
+        if (direction == "forward" && endPage < totalPages)
+        {
+            startPage = endPage + 1;
+            if (endPage + pagerSize < totalPages)
+            {
+                endPage = startPage + pagerSize - 1;
+            }
+            else
+            {
+                endPage = totalPages;
+            }
+            this.StateHasChanged();
+        }
+        else if (direction == "back" && startPage > 1)
+        {
+            endPage = startPage - 1;
+            startPage = startPage - pagerSize;
+        }
+        else
+        {
+            startPage = 1;
+            endPage = totalPages;
+        }
+    }
+
+    public async Task NavigateToPage(string direction)
+    {
+        if (direction == "next")
+        {
+            if (curPage < totalPages)
+            {
+                if (curPage == endPage)
+                {
+                    SetPagerSize("forward");
+                }
+                curPage += 1;
+            }
+        }
+        else if (direction == "previous")
+        {
+            if (curPage > 1)
+            {
+                if (curPage == startPage)
+                {
+                    SetPagerSize("back");
+                }
+                curPage -= 1;
+            }
+        }
+        await refreshRecords(curPage);
+    }
+}

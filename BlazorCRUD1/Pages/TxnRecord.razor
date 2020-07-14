@@ -1,0 +1,304 @@
+﻿@page "/txnRecord"
+@inject IProductManager productManager
+@inject ISaleTxnManager saleManager
+@inject ICustomerManager customerManager
+@inject IOrderManager orderManager
+@inject IModalService Modal
+
+
+<div class="row col-md-3 pull-right">
+    <input type="text" id="txtSearch" placeholder="Search Customer" class="form-control" @bind="CustomerID" @bind:event="oninput" />
+</div>
+
+@if (IsShow)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="sort-th">
+                    Customer Name
+                    <span class="fa"></span>
+                </th>
+
+                <th class="sort-th">
+                    Customer Phone
+                    <span class="fa"></span>
+                </th>
+
+                <th class="sort-th">
+                    Customer Company
+                    <span class="fa"></span>
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (customerModel == null || customerModel.Count == 0)
+            {
+                <tr>
+                    <td colspan="4">
+                        No Customer found
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+                foreach (var customer in customerModel)
+                {
+                    <tr>
+                        <td>@customer.CustomerName</td>
+                        <td>@customer.CustomerPhone</td>
+                        <td>@customer.CustomerCompany</td>
+                        <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">SELECT</a>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+}
+
+@if (customer != null)
+{
+    <h3>Customer: @customer.CustomerName</h3>
+    <h3>Phone: @customer.CustomerPhone</h3>
+    <h3>Company: @customer.CustomerCompany</h3>
+}
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="sort-th">
+                ID
+                <span class="fa"></span>
+            </th>
+            <th class="sort-th">
+                Txn Type
+                <span class="fa"></span>
+            </th>
+            <th class="sort-th">
+                Total Amt
+                <span class="fa"></span>
+            </th>
+            <th class="sort-th">
+                Net Amt
+                <span class="fa"></span>
+            </th>
+            <th class="sort-th">
+                Deposit Amt
+                <span class="fa"></span>
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (orderModel == null || orderModel.Count == 0)
+        {
+            <tr>
+                <td colspan="6">
+                    No Order found
+                </td>
+            </tr>
+        }
+        else
+        {
+
+            foreach (var order in orderModel)
+            {
+                <tr data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(order.ID)">
+                    <td>@order.ID</td>
+                    <td>@order.OrderTxnType</td>
+                    <td>@order.OrderTotalTxn</td>
+                    <td>
+                        @order.OrderNetAmt
+                    </td>
+                    <td>@order.OrderDiscountAmt</td>
+                    <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">SELECT</a>
+                </tr>
+                @if (saleTxnModel == null || saleTxnModel.Count == 0)
+                {
+                    if (order.ID == selectedindex)
+                    {
+                        <tr data-toggle="collapse" class="@NavMenuCssClass">
+                            <td colspan="6">
+                                No Item to display
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    if (order.ID == saleTxnModel[0].SaleTxnOrderID)
+                    {
+                        <tr data-toggle="collapse" class="@NavMenuCssClass">
+                            <th class="sort-th">
+                                ID
+                                <span class="fa "></span>
+                            </th>
+                            <th class="sort-th">
+                                Product Name
+                                <span class="fa "></span>
+                            </th>
+
+                            <th class="sort-th">
+                                Product Origin
+                                <span class="fa"></span>
+                            </th>
+
+                            <th class="sort-th">
+                                QTY
+                                <span class="fa"></span>
+                            </th>
+
+                            <th class="sort-th">
+                                Unit Price
+                                <span class="fa "></span>
+                            </th>
+
+                            <th class="sort-th">
+                                Sub Total
+                                <span class="fa "></span>
+                            </th>
+
+                            <th class="sort-th">
+                                Status
+                                <span class="fa"></span>
+                            </th>
+                        </tr>
+
+                        foreach (var item in saleTxnModel)
+                        {
+                            <tr data-toggle="collapse" class="@NavMenuCssClass">
+                                <td>@item.SaleProduct.ID</td>
+                                <td>@item.SaleProduct.ProductName</td>
+                                <td>@item.SaleProduct.ProductOrigin</td>
+                                <td>@item.SaleQty/></td>
+                                <td>@item.SaleProduct.ProductPrice</td>
+                                <td>@item.CalculateSubTotal()</td>
+                                <td>@item.SaleStatus</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+
+@code {
+    List<Product> productModel;
+    Product productEntity = new Product();
+
+    List<SaleTxn> saleTxnModel;
+    List<Customer> customerModel;
+    Customer customer = new Customer();
+
+    Order orderEntity = new Order();
+    List<Order> orderModel;
+
+    bool collapseNavMenu = true;
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    int selectedindex;
+
+    private string searchTerm;
+    private string CustomerID
+    {
+        get { return searchTerm; }
+        set
+        {
+            searchTerm = value;
+            FilterCustomer(searchTerm);
+        }
+    }
+
+
+    private bool IsShow { get; set; } = false;
+    private void Show()
+    {
+        IsShow = !IsShow;
+    }
+
+    private bool IsShow2 { get; set; } = false;
+    private void Show2()
+    {
+        IsShow2 = !IsShow2;
+    }
+
+
+    protected void FilterClear()
+    {
+        this.IsShow = false;
+        this.IsShow2 = false;
+    }
+
+
+    protected async Task FilterCustomer(String customerId)
+    {
+        IsShow = true;
+
+        customerModel = await customerManager.ListAll(customerId);
+    }
+
+    protected async Task SelectCustomer(Customer cust)
+    {
+        IsShow2 = false;
+        customer = cust;
+        if (orderModel == null)
+            orderModel = new List<Order>();
+
+        orderModel = await orderManager.SimplyListAll(customer.ID);
+    }
+
+    public async void ConfirmTransaction(Order order)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(order), order);
+
+        var formModal = Modal.Show<ConfirmTxn>("Confirm Txn", parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Order Temp = (Order)result.Data;
+
+            orderEntity.UpdatedBy = "SAM";
+            orderEntity.UpdatedDateTime = DateTime.Now;
+
+            if (orderEntity.OrderCustomer == null)
+                orderEntity.OrderCustomer = new Customer();
+
+            int order_id = await orderManager.Create(orderEntity);
+
+            foreach (SaleTxn item in saleTxnModel)
+            {
+                item.SaleTxnOrderID = order_id;
+                item.UpdatedBy = "SAM";
+                item.UpdatedDateTime = DateTime.Now;
+                await saleManager.Create(item);
+            }
+        }
+    }
+
+    public async void ToggleTableTr(int orderID)
+    {
+        selectedindex = orderID;
+        collapseNavMenu = !collapseNavMenu;
+        saleTxnModel = await saleManager.SimplyListAll(orderID);
+        IsShow2 = !IsShow2;
+        foreach(SaleTxn item in saleTxnModel)
+        {
+            item.SaleProduct = await productManager.GetById(item.SaleTxnProductID);
+        }
+
+
+    }
+}

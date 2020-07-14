@@ -1,0 +1,40 @@
+﻿@page "/confirmTxn"
+@inject IArticleManager articleManager
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+
+<h1>Confirm Order</h1>
+
+<h3>Total Amt: @order.OrderTotalTxn</h3>
+<h3>Adjust Amt: @order.OrderDiscountAmt</h3>
+<h3>Net Amt: @order.OrderNetAmt</h3>
+<h4>Deposit Amt</h4><input placeholder="Deposit" type=number step=0.01 @bind-value:event="oninput" @bind-value="@paymentAmt" />
+
+<button @onclick="ConfirmedOrder" class="btn btn-primary">Submit</button>
+<button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    Article article = new Article();
+    [Parameter] public Order order { get; set; }
+    String testing = "Default String";
+
+    public double paymentAmt { get; set; }
+
+    protected override void OnInitialized()
+    {
+        paymentAmt = order.OrderNetAmt;
+    }
+
+    protected async Task ConfirmedOrder()
+    {
+        order.OrderDiscountAmt = paymentAmt;
+        BlazoredModal.Close(ModalResult.Ok(order));
+    }
+
+    void Cancel()
+    {
+        BlazoredModal.Cancel();
+    }
+}

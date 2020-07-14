@@ -1,0 +1,44 @@
+﻿@page "/editProduct/{ID}"
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IStringLocalizer<EditProduct> localizer
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="Name" class="control-label">@localizer["productName"]</label>
+                <input for="Name" class="form-control" @bind-value="@product.ProductName" />
+
+                <label for="Name" class="control-label">@localizer["productPrice"]</label>
+                <input for="Name" type="number" class="form-control" @bind-value="@product.ProductPrice" />
+
+                <label for="Name" class="control-label">@localizer["productOrigin"]</label>
+                <input for="Name" class="form-control" @bind-value="@product.ProductOrigin" />
+
+                <label for="Name" class="control-label">@localizer["productDetails"]</label>
+                <input for="Name" class="form-control" @bind-value="@product.ProductDetails" />
+
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" @onclick="() => ConfirmedUpdate()">@localizer["confirm"]</button>
+                <button type="button" class="btn btn-danger" @onclick="() => Cancel()">@localizer["cancel"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@code  {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [Parameter] public Product product { get; set; }
+
+    void ConfirmedUpdate()
+    {
+        BlazoredModal.Close(ModalResult.Ok(product));
+    }
+
+    void Cancel()
+    {
+        BlazoredModal.Cancel();
+    }
+}

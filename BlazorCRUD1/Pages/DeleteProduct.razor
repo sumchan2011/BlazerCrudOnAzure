@@ -1,0 +1,31 @@
+﻿@page "/deleteProduct"
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IStringLocalizer<DeleteProduct> localizer
+
+<h3>@localizer["productName"]: @product.ProductName</h3>
+<h3>@localizer["productPrice"]: @product.ProductPrice</h3>
+
+<button @onclick="ConfirmedDelete" class="btn btn-primary">@localizer["confirm"]</button>
+<button @onclick="Cancel" class="btn btn-secondary">@localizer["cancel"]</button>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [Parameter] public Product product { get; set; }
+
+    public double paymentAmt { get; set; }
+
+    protected override void OnInitialized()
+    {
+    }
+
+    void ConfirmedDelete()
+    {
+        BlazoredModal.Close(ModalResult.Ok(product));
+    }
+
+    void Cancel()
+    {
+        BlazoredModal.Cancel();
+    }
+}

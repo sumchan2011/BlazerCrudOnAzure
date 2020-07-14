@@ -1,0 +1,411 @@
+﻿@page "/"
+@inject IProductManager productManager
+@inject ISaleTxnManager saleManager
+@inject IStockManager stockManager
+@inject ICustomerManager customerManager
+@inject IOrderManager orderManager
+@inject IModalService Modal
+<h1>SALE</h1>
+
+
+<div class="search-wrapper">
+    <div class="search-title"><i class="fas fa-filter"></i> Filter</div>
+    <form id="list-table-search-form" class="search-form" action="/receipt/export" method="post">
+        <div class="form-row">
+
+            <div class="form-group col-md-2">
+                <label for="productName">Product Name</label>
+                <input id="productName" name="productName" type="text" @bind="productName" class="form-control">
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="productOrigin">Product Origin</label>
+                <input id="productOrigin" name="productOrigin" type="text" @bind="productOrigin" class="form-control">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="minAmt">Amount</label>
+                <div class="input-group input-amtrange">
+                    <input id="minAmt" name="minAmt" type="text" @bind="lowerAmt" class="form-control">
+                    <div class="input-group-between">
+                        <div class="input-group-text">to</div>
+                    </div>
+                    <input id="maxAmt" name="maxAmt" type="text" @bind="upperAmt" class="form-control">
+                </div>
+
+            </div>
+
+            <div class="form-group col-md-2"></div>
+            <div class="form-group col text-right">
+                <a class="btn btn-wide btn-outline-secondary" @onclick="() => FilterClear()">Clear</a>
+                <a class="btn btn-wide btn-custom" @onclick="() => FilterProduct(productName, productOrigin, lowerAmt, upperAmt)">Filter</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@if (IsShow)
+{
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="sort-th">
+                ID
+                <span class="fa"></span>
+            </th>
+            <th class="sort-th">
+                ProductName
+                <span class="fa"></span>
+            </th>
+
+            <th class="sort-th">
+                ProductOrigin
+                <span class="fa"></span>
+            </th>
+
+            <th class="sort-th">
+                ProductPrice
+                <span class="fa"></span>
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (productModel == null || productModel.Count == 0)
+            {
+        <tr>
+            <td colspan="6">
+                No Records to display
+            </td>
+        </tr>
+            }
+            else
+            {
+
+                foreach (var product in productModel)
+                {
+        <tr>
+            <td>@product.ID</td>
+            <td>@product.ProductName</td>
+            <td>@product.ProductOrigin</td>
+            <td>@product.ProductPrice</td>
+            <a class="btn btn-primary" @onclick="() => AddtoBucket(product)">BUY</a>
+        </tr>
+                }
+            }
+
+    </tbody>
+</table>
+}
+
+
+<div class="row col-md-3 pull-right">
+    <input type="text" id="txtSearch" placeholder="Search Customer" class="form-control" @bind="CustomerID" @bind:event="oninput" />
+</div>
+
+@if (IsShow2)
+{
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="sort-th">
+                Customer Name
+                <span class="fa"></span>
+            </th>
+
+            <th class="sort-th">
+                Customer Phone
+                <span class="fa"></span>
+            </th>
+
+            <th class="sort-th">
+                Customer Company
+                <span class="fa"></span>
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (customerModel == null || customerModel.Count == 0)
+            {
+        <tr>
+            <td colspan="4">
+                No Customer found
+            </td>
+        </tr>
+            }
+            else
+            {
+
+                foreach (var customer in customerModel)
+                {
+        <tr>
+            <td>@customer.CustomerName</td>
+            <td>@customer.CustomerPhone</td>
+            <td>@customer.CustomerCompany</td>
+            <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">SELECT</a>
+        </tr>
+                }
+            }
+
+    </tbody>
+</table>
+}
+
+@if (orderEntity.OrderCustomer != null)
+{
+<h3>Customer: @orderEntity.OrderCustomer.CustomerName</h3>
+<h3>Phone: @orderEntity.OrderCustomer.CustomerPhone</h3>
+<h3>Company: @orderEntity.OrderCustomer.CustomerCompany</h3>
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="sort-th">
+                ID
+                <span class="fa "></span>
+            </th>
+            <th class="sort-th">
+                Product Name
+                <span class="fa "></span>
+            </th>
+
+            <th class="sort-th">
+                Product Origin
+                <span class="fa"></span>
+            </th>
+
+            <th class="sort-th">
+                QTY
+                <span class="fa"></span>
+            </th>
+
+            <th class="sort-th">
+                Unit Price
+                <span class="fa "></span>
+            </th>
+
+            <th class="sort-th">
+                Sub Total
+                <span class="fa "></span>
+            </th>
+
+            <th class="sort-th">
+                Status
+                <span class="fa"></span>
+            </th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (saleTxnModel == null || saleTxnModel.Count == 0)
+        {
+        <tr>
+            <td colspan="8">
+                No Records to display
+            </td>
+        </tr>
+        }
+        else
+        {
+            orderEntity.OrderTotalTxn = 0;
+
+            foreach (var saleItem in saleTxnModel)
+            {
+        <tr>
+            <td>@saleItem.SaleProduct.ID</td>
+            <td>@saleItem.SaleProduct.ProductName</td>
+            <td>@saleItem.SaleProduct.ProductOrigin</td>
+            <td><input type=number step=0.01 @bind-value:event="oninput" @bind-value="@saleItem.SaleQty" /></td>
+            <td>@saleItem.SaleProduct.ProductPrice</td>
+            <td>@saleItem.CalculateSubTotal()</td>
+            <td>@saleItem.SaleStatus</td>
+            <td>
+                <a class="btn btn-danger" @onclick="() => RemoveFromBucket(saleItem)">Delete</a>
+            </td>
+        </tr>
+
+                orderEntity.OrderTotalTxn += saleItem.SaleSubTotal;
+            }
+        }
+
+    </tbody>
+</table>
+
+<h4>Total Amount: @orderEntity.OrderTotalTxn</h4>
+<h4>Discount Amount: <input type=number step=0.01 @bind-value:event="oninput" @bind-value="@orderEntity.OrderDiscountAmt" /></h4>
+@{orderEntity.OrderNetAmt = orderEntity.OrderTotalTxn + orderEntity.OrderDiscountAmt;}
+<h4>Net Amount: @orderEntity.OrderNetAmt</h4>
+
+<!--<a class="btn btn-wide btn-outline-secondary" @onclick="() =>ConfirmTransaction()">Confirm Order</a>-->
+<button class="btn btn-primary" @onclick="() => ConfirmTransaction(orderEntity)">Confirm Order</button>
+
+
+@code {
+    public string searchProduct, productName, productOrigin, lowerAmt, upperAmt;
+    List<Product> productModel;
+    Product productEntity = new Product();
+
+    List<SaleTxn> saleTxnModel;
+    List<Customer> customerModel;
+
+    Order orderEntity = new Order();
+
+    Boolean isProductSearchHidden = false;
+
+    private string searchTerm;
+    private string CustomerID
+    {
+        get { return searchTerm; }
+        set
+        {
+            searchTerm = value;
+            FilterCustomer(searchTerm);
+        }
+    }
+
+
+
+    private bool IsShow { get; set; } = false;
+    private void Show()
+    {
+        IsShow = !IsShow;
+    }
+
+    private bool IsShow2 { get; set; } = false;
+    private void Show2()
+    {
+        IsShow2 = !IsShow2;
+    }
+
+    protected async Task FilterProduct(String name, String origin, String lowerAmt, String upperAmt)
+    {
+        IsShow = true;
+
+        if (String.IsNullOrEmpty(lowerAmt))
+            lowerAmt = "0";
+
+        if (String.IsNullOrEmpty(upperAmt))
+            upperAmt = "10000000000000000000000";
+
+        productModel = await productManager.SimplyListFilterAll(name, origin, Double.Parse(lowerAmt), Double.Parse(upperAmt));
+    }
+
+    protected void FilterClear()
+    {
+        this.IsShow = false;
+        this.productName = null;
+        this.productOrigin = null;
+        this.lowerAmt = null;
+        this.upperAmt = null;
+    }
+
+    public async void AddtoBucket(Product product)
+    {
+        SaleTxn saleItem = new SaleTxn();
+        saleItem.SaleProduct = product;
+        saleItem.SaleStatus = 0;
+        saleItem.SaleQty = 1.0;
+        saleItem.SaleSubTotal = saleItem.SaleQty * saleItem.SaleProduct.ProductPrice;
+        saleItem.UpdatedBy = "SAM";
+        saleItem.UpdatedDateTime = DateTime.Now;
+
+        if (saleTxnModel == null)
+            saleTxnModel = new List<SaleTxn>();
+
+        if (saleItem.ProductStock == null)
+            saleItem.ProductStock = new List<Stock>();
+
+        saleItem.ProductStock = await stockManager.SimpleListAll(product.ID);
+
+
+        productModel.Remove(product);
+
+        saleTxnModel.Add(saleItem);
+
+        orderEntity.OrderTotalTxn += saleItem.SaleSubTotal;
+        orderEntity.OrderNetAmt += saleItem.SaleSubTotal;
+    }
+
+    public void RemoveFromBucket(SaleTxn saleItem)
+    {
+        orderEntity.OrderTotalTxn -= saleItem.SaleSubTotal;
+        orderEntity.OrderNetAmt -= saleItem.SaleSubTotal;
+
+        saleTxnModel.Remove(saleItem);
+    }
+
+    protected async Task FilterCustomer(String customerId)
+    {
+        IsShow2 = true;
+
+        customerModel = await customerManager.ListAll(customerId);
+    }
+
+    public void SelectCustomer(Customer customer)
+    {
+        IsShow2 = false;
+
+        orderEntity.OrderCustomer = customer;
+    }
+
+    public async void ConfirmTransaction()
+    {
+
+
+        /*orderEntity.UpdatedBy = "SAM";
+        orderEntity.UpdatedDateTime = DateTime.Now;
+
+        if (orderEntity.OrderCustomer == null)
+            orderEntity.OrderCustomer = new Customer();
+
+        int order_id = await orderManager.Create(orderEntity);
+
+        foreach (SaleTxn item in saleTxnModel)
+        {
+            item.OrderID = order_id;
+            item.UpdatedBy = "SAM";
+            item.UpdatedDateTime = DateTime.Now;
+            await saleManager.Create(item);
+        }
+        */
+    }
+
+    public async void ConfirmTransaction(Order order)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(order), order);
+
+        var formModal = Modal.Show<ConfirmTxn>("Confirm Txn", parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Order Temp = (Order)result.Data;
+
+            orderEntity.UpdatedBy = "SAM";
+            orderEntity.UpdatedDateTime = DateTime.Now;
+
+            if (orderEntity.OrderCustomer == null)
+                orderEntity.OrderCustomer = new Customer();
+
+            int order_id = await orderManager.Create(orderEntity);
+
+            foreach (SaleTxn item in saleTxnModel)
+            {
+                item.SaleTxnOrderID = order_id;
+                item.UpdatedBy = "SAM";
+                item.UpdatedDateTime = DateTime.Now;
+                await saleManager.Create(item);
+            }
+        }
+    }
+}
