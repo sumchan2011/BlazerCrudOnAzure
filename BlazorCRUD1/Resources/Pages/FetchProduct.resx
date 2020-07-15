@@ -123,6 +123,9 @@
   <data name="addNewProduct" xml:space="preserve">
     <value>Add New Product</value>
   </data>
+  <data name="addStock" xml:space="preserve">
+    <value>Add Stock</value>
+  </data>
   <data name="clear" xml:space="preserve">
     <value>Clear</value>
   </data>
@@ -141,11 +144,17 @@
   <data name="filter" xml:space="preserve">
     <value>Filter</value>
   </data>
+  <data name="gun" xml:space="preserve">
+    <value>斤</value>
+  </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="inStock" xml:space="preserve">
     <value>In Stock</value>
+  </data>
+  <data name="kg" xml:space="preserve">
+    <value>Kg</value>
   </data>
   <data name="next" xml:space="preserve">
     <value>Next</value>
@@ -167,6 +176,15 @@
   </data>
   <data name="productPrice" xml:space="preserve">
     <value>Unit Price</value>
+  </data>
+  <data name="stockCost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="stockDate" xml:space="preserve">
+    <value>Stock Date</value>
+  </data>
+  <data name="stockQTY" xml:space="preserve">
+    <value>QTY</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>TO</value>

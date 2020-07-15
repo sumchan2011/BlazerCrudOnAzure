@@ -18,16 +18,9 @@ namespace BlazorCRUD1.Concrete
 
         public Task<int> Create(Stock stock)
         {
-            var dbPara = new DynamicParameters();
-            dbPara.Add("ProductID", stock.ProductID, DbType.Int32);
-            dbPara.Add("StockCost", stock.StockCost, DbType.Double);
-            dbPara.Add("StockQty", stock.StockQty, DbType.Double);
-            dbPara.Add("UpdatedDateTime", stock.UpdatedDateTime, DbType.DateTime);
-            dbPara.Add("UpdatedBy", stock.UpdatedBy, DbType.String);
-            var articleId = Task.FromResult(_dapperManager.Insert<int>("[dbo].[SP_Add_Article]",
-                            dbPara,
-                            commandType: CommandType.StoredProcedure));
-            return articleId;
+            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Stock](ProductID,StockCost,StockQty,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{stock.ProductID}','{stock.StockCost}','{stock.StockQty}','{false}','{stock.UpdatedDateTime}','{stock.UpdatedBy}')", null,
+                commandType: CommandType.Text));
+            return productId;
         }
 
         public Task<Stock> GetById(int id)

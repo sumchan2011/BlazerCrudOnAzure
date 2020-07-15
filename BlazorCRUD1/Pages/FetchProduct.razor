@@ -3,6 +3,7 @@
 @inject IStockManager stockManager
 @inject IStringLocalizer<FetchProduct> localizer
 @inject IModalService Modal
+@inject IStoreManager storeManager
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -29,7 +30,7 @@
 </style>
 
 <div>
-    <a class="btn btn-primary" href='/addProduct'>@localizer["addNewProduct"]</a>
+    <a class="btn btn-primary" @onclick="() => AddProductDialog()">@localizer["addNewProduct"]</a>
 </div>
 <br />
 
@@ -123,8 +124,8 @@ else
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ID</td>
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductName</td>
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductOrigin</td>
-                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductPrice</td>
-                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductTotalStock</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">$@product.ProductPrice</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@displayStockValue(product.ProductTotalStock,storeInfo.StoreUnit)</td>
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductDetails</td>
                         <td>
                             <!-- <a class="btn btn-primary" href='/editProduct/@product.ID'>@localizer["edit"]</a>-->
@@ -136,7 +137,10 @@ else
                     {
                         if (product.ID == selectedindex)
                         {
-                            <tr data-toggle="collapse" class="@NavMenuCssClass"><td colspan="6">No Stock to display</td></tr>
+                            <tr data-toggle="collapse" class="@NavMenuCssClass">
+                                <td colspan="6">No Stock to display</td>
+                                <td class="btn btn-primary">@localizer["inStock"]</td>
+                            </tr>
                         }
                     }
                     else
@@ -144,25 +148,25 @@ else
 
                         if (product.ID == stockModel[0].ProductID)
                         {
-                            //use css/style to complete a box 
+                            //use css/style to complete a box
                             <div class="myDiv">
-                                <tr data-toggle="collapse" class="@NavMenuCssClass ">
-                                    <th>Stock QTY</th>
-                                    <th>Stock Cost</th>
-                                    <th>Stock Date</th>
+                                <tr data-toggle="collapse" class="@NavMenuCssClass">
+                                    <th>@localizer["stockQTY"]</th>
+                                    <th>@localizer["stockCost"]</th>
+                                    <th>@localizer["stockDate"]</th>
                                 </tr>
                                 @{
                                     foreach (var stock in stockModel)
                                     {
                                         <tr data-toggle="collapse" class="@NavMenuCssClass">
-                                            <td>@stock.StockQty</td>
-                                            <td>@stock.StockCost</td>
+                                            <td>@displayStockValue(stock.StockQty, storeInfo.StoreUnit)</td>
+                                            <td>$@stock.StockCost</td>
                                             <td>@stock.UpdatedDateTime</td>
                                         </tr>
                                     }
-                                }
+                                    <a data-toggle="collapse" class="@NavMenuCssClass btn btn-primary" @onclick="()=>AddStock(product)">@localizer["inStock"]</a>
 
-                                <a class="btn btn-primary">@localizer["inStock"]</a>
+                                }
                             </div>
                         }
                     }
@@ -191,8 +195,7 @@ else
 @code {
     List<Product> productModel;
     List<Stock> stockModel;
-    Product productEntity = new Product();
-    Stock stockEntity = new Stock();
+    Store storeInfo;
 
     #region Pagination
     int totalPages;
@@ -269,6 +272,7 @@ else
         pagerSize = 3;
         pageSize = 5;
         curPage = 1;
+        storeInfo = await storeManager.GetById(1);
         productModel = await productManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
         totalRecords = await productManager.Count(productName);
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
@@ -308,7 +312,27 @@ else
         }
         else
         {
+
             UpdateProduct((Product)result.Data).Wait();
+        }
+    }
+
+    public async void AddProductDialog()
+    {
+        var formModal = Modal.Show<AddProduct>(localizer["addNewProduct"]);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Product temp = (Product)result.Data;
+            temp.UpdatedBy = "Stanley";
+            temp.UpdatedDateTime = DateTime.Now;
+            productManager.Create(temp).Wait();
+            StateHasChanged();
         }
     }
 
@@ -348,6 +372,43 @@ else
     public async Task GetTotalStockByProductID(int productID)
     {
         await stockManager.GetTotalStockByProductID(productID);
+    }
+
+    public async void AddStock(Product product)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(product), product);
+
+        var formModal = Modal.Show<AddStock>(localizer["addStock"], parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Stock temp = (Stock)result.Data;
+            temp.UpdatedBy = "Stanley";
+            temp.UpdatedDateTime = DateTime.Now;
+            stockManager.Create(temp).Wait();
+            StateHasChanged();
+        }
+    }
+
+    public string displayStockValue(double stock, int unitType)
+    {
+        Dictionary<string,double> temp = BlazorCRUD1.Resources.Utils.Utils.convertStockUnit(stock, unitType);
+        switch (unitType)
+        {
+            case 0:
+                return temp["stock"] + localizer["kg"];
+            case 1:
+                return temp["stock"] + localizer["gun"];
+            default:
+                return temp["stock"].ToString();
+        }
     }
 
     private bool isSortedAscending;

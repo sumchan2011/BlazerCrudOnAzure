@@ -123,6 +123,9 @@
   <data name="addNewProduct" xml:space="preserve">
     <value>新增貨品</value>
   </data>
+  <data name="addStock" xml:space="preserve">
+    <value>存貨</value>
+  </data>
   <data name="clear" xml:space="preserve">
     <value>清除</value>
   </data>
@@ -141,11 +144,17 @@
   <data name="filter" xml:space="preserve">
     <value>篩選器</value>
   </data>
+  <data name="gun" xml:space="preserve">
+    <value>斤</value>
+  </data>
   <data name="ID" xml:space="preserve">
     <value>編號</value>
   </data>
   <data name="inStock" xml:space="preserve">
     <value>存貨</value>
+  </data>
+  <data name="kg" xml:space="preserve">
+    <value>公斤</value>
   </data>
   <data name="next" xml:space="preserve">
     <value>下一頁</value>
@@ -167,6 +176,15 @@
   </data>
   <data name="productPrice" xml:space="preserve">
     <value>單位售價</value>
+  </data>
+  <data name="stockCost" xml:space="preserve">
+    <value>總來貨價</value>
+  </data>
+  <data name="stockDate" xml:space="preserve">
+    <value>存貨日期</value>
+  </data>
+  <data name="stockQTY" xml:space="preserve">
+    <value>批次貨量</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>至</value>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IBOzqy2wISVS81SEcnGFmPx9XjMQufVcUsbxcIcr3556YXTLT/MwNpprbRg9/ULs9akEswDP2meYz5GWksf5BQ==",
+  "dgSpecHash": "OluiqttWgpCzaYKN7U4zEI18sBtpMRkioFK5T/JUSjLRxmC/5QeBryorosYQHbrTxhi49h1wMfBwdnRO9B2UkA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\StanleyYan\\source\\repos\\BlazorCRUD1\\BlazorCRUD1\\BlazorCRUD1.csproj",
+  "projectFilePath": "C:\\Users\\StanleyYan\\source\\repos\\BlazerCrudOnAzure\\BlazorCRUD1\\BlazorCRUD1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\StanleyYan\\.nuget\\packages\\blazored.modal\\4.1.0\\blazored.modal.4.1.0.nupkg.sha512",
     "C:\\Users\\StanleyYan\\.nuget\\packages\\dapper\\2.0.30\\dapper.2.0.30.nupkg.sha512",

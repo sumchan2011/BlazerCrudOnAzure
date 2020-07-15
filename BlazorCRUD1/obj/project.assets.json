@@ -8462,11 +8462,11 @@
   "project": {
     "version": "1.0.1",
     "restore": {
-      "projectUniqueName": "C:\\Users\\StanleyYan\\source\\repos\\BlazorCRUD1\\BlazorCRUD1\\BlazorCRUD1.csproj",
+      "projectUniqueName": "C:\\Users\\StanleyYan\\source\\repos\\BlazerCrudOnAzure\\BlazorCRUD1\\BlazorCRUD1.csproj",
       "projectName": "BlazorCRUD1",
-      "projectPath": "C:\\Users\\StanleyYan\\source\\repos\\BlazorCRUD1\\BlazorCRUD1\\BlazorCRUD1.csproj",
+      "projectPath": "C:\\Users\\StanleyYan\\source\\repos\\BlazerCrudOnAzure\\BlazorCRUD1\\BlazorCRUD1.csproj",
       "packagesPath": "C:\\Users\\StanleyYan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\StanleyYan\\source\\repos\\BlazorCRUD1\\BlazorCRUD1\\obj\\",
+      "outputPath": "C:\\Users\\StanleyYan\\source\\repos\\BlazerCrudOnAzure\\BlazorCRUD1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

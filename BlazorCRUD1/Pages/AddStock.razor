@@ -1,0 +1,45 @@
+﻿@page "/addStock"
+@inject IProductManager productManager
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IStringLocalizer<AddStock> localizer
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+
+                <label for="Name" class="control-label">@product.ProductName</label>
+
+                <label for="Name" class="control-label">@localizer["stockCost"]</label>
+                <input for="Name" class="form-control" @bind-value="@stock.StockCost" />
+
+                <label for="Name" class="control-label">@localizer["stockQTY"]</label>
+                <input for="Name" class="form-control" @bind-value="@stock.StockQty" />
+
+
+
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" @onclick="() => ConfirmedUpdate()">@localizer["confirm"]</button>
+                <button type="button" class="btn btn-danger" @onclick="() => Cancel()">@localizer["cancel"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [Parameter] public Product product { get; set; }
+    Stock stock = new Stock();
+
+    void ConfirmedUpdate()
+    {
+        stock.ProductID = product.ID;
+        BlazoredModal.Close(ModalResult.Ok(stock));
+    }
+
+    void Cancel()
+    {
+        BlazoredModal.Cancel();
+    }
+}
