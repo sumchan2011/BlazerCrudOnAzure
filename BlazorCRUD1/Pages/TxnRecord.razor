@@ -211,7 +211,7 @@
         set
         {
             searchTerm = value;
-            FilterCustomer(searchTerm);
+            FilterCustomer(searchTerm).Wait();
         }
     }
 

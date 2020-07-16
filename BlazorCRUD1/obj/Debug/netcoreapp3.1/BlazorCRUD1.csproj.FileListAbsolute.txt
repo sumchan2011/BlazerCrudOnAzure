@@ -298,7 +298,6 @@ C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\bin\Debug\netcore
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.csprojAssemblyReference.cache
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.AddProduct.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.AddStock.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.DeleteProduct.resources
@@ -326,7 +325,6 @@ C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcore
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Error.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchArticle.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchProduct.razor.g.cs
-C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchStock.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Index.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\TxnRecord.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\MainLayout.razor.g.cs
@@ -347,7 +345,6 @@ C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcore
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\Error.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\FetchArticle.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\FetchProduct.razor.g.cs
-C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\FetchStock.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\Index.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\TxnRecord.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
@@ -366,3 +363,10 @@ C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcore
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.dll
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.pdb
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.genruntimeconfig.cache
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.csprojAssemblyReference.cache
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Shared.NavMenu.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Shared.NavMenu.zh-hk.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.FetchCustomer.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.FetchCustomer.zh-hk.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchCustomer.razor.g.cs
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\FetchCustomer.razor.g.cs

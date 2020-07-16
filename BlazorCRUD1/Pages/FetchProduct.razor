@@ -114,7 +114,7 @@ else
         <tbody>
             @if (productModel == null || productModel.Count == 0)
             {
-                <tr><td colspan="6">@localizer["noProduct"]</td></tr>
+                <tr><td colspan="7">@localizer["noProduct"]</td></tr>
             }
             else
             {
@@ -139,7 +139,7 @@ else
                         {
                             <tr data-toggle="collapse" class="@NavMenuCssClass">
                                 <td colspan="6">No Stock to display</td>
-                                <td class="btn btn-primary">@localizer["inStock"]</td>
+                                <td class="btn btn-primary" @onclick="()=>AddStock(product)">@localizer["inStock"]</td>
                             </tr>
                         }
                     }
@@ -165,7 +165,6 @@ else
                                         </tr>
                                     }
                                     <a data-toggle="collapse" class="@NavMenuCssClass btn btn-primary" @onclick="()=>AddStock(product)">@localizer["inStock"]</a>
-
                                 }
                             </div>
                         }
@@ -312,7 +311,6 @@ else
         }
         else
         {
-
             UpdateProduct((Product)result.Data).Wait();
         }
     }
@@ -332,6 +330,7 @@ else
             temp.UpdatedBy = "Stanley";
             temp.UpdatedDateTime = DateTime.Now;
             productManager.Create(temp).Wait();
+            productModel = await productManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
             StateHasChanged();
         }
     }
@@ -346,7 +345,6 @@ else
     protected async Task UpdateProduct(Product product)
     {
         await productManager.Update(product, false);
-        FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
         StateHasChanged();
     }
 
@@ -357,6 +355,12 @@ else
 
         if (String.IsNullOrEmpty(upperAmt))
             upperAmt = "10000000000000000000000";
+
+        if (String.IsNullOrEmpty(name))
+            name = "";
+
+        if (String.IsNullOrEmpty(origin))
+            origin = "";
 
         productModel = await productManager.ListFilterAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir, name, origin, Double.Parse(lowerAmt), Double.Parse(upperAmt));
     }
@@ -393,6 +397,8 @@ else
             temp.UpdatedBy = "Stanley";
             temp.UpdatedDateTime = DateTime.Now;
             stockManager.Create(temp).Wait();
+            stockModel = await stockManager.SimpleListAll(product.ID);
+            productModel = await productManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
             StateHasChanged();
         }
     }

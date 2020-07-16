@@ -18,7 +18,7 @@ namespace BlazorCRUD1.Concrete
 
         public Task<int> Create(Stock stock)
         {
-            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Stock](ProductID,StockCost,StockQty,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{stock.ProductID}','{stock.StockCost}','{stock.StockQty}','{false}','{stock.UpdatedDateTime}','{stock.UpdatedBy}')", null,
+            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Stock](ProductID,StockCost,StockQty,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{stock.ProductID}','{stock.StockCost}','{stock.StockQty}','{false}',CONVERT(datetime,'{stock.UpdatedDateTime}',103),'{stock.UpdatedBy}')", null,
                 commandType: CommandType.Text));
             return productId;
         }

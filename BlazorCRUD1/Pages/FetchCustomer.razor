@@ -1,5 +1,6 @@
-﻿@page "/stocklist"
+﻿@page "/customerlist"
 @inject ICustomerManager CustomerManager
+@inject IStringLocalizer<FetchCustomer> localizer
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -40,30 +41,26 @@ else
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th class="sort-th" @onclick="@(() => SortTable("ID"))">
-                    ID
-                    <span class="fa @(SetSortIcon("ID"))"></span>
-                </th>
                 <th class="sort-th" @onclick="@(() => SortTable("Title"))">
-                    Customer Phone
+                    @localizer["customerPhone"]
                     <span class="fa @(SetSortIcon("Title"))"></span>
                 </th>
 
                 <th class="sort-th" @onclick="@(() => SortTable("Title"))">
-                    Customer Name
+                    @localizer["customerName"]
                     <span class="fa @(SetSortIcon("Title"))"></span>
                 </th>
 
                 <th class="sort-th" @onclick="@(() => SortTable("Title"))">
-                    Customer Email
+                    @localizer["customerEmail"]
                     <span class="fa @(SetSortIcon("Title"))"></span>
                 </th>
 
                 <th class="sort-th" @onclick="@(() => SortTable("Title"))">
-                    Customer Company
+                    @localizer["customerCompany"]
                     <span class="fa @(SetSortIcon("Title"))"></span>
                 </th>
-                <th>Action</th>
+                <th>@localizer["action"]</th>
             </tr>
         </thead>
         <tbody>
@@ -71,7 +68,7 @@ else
             {
                 <tr>
                     <td colspan="6">
-                        No Records to display
+                        @localizer["noCustomer"]
                     </td>
                 </tr>
             }
@@ -79,17 +76,16 @@ else
             {
                 foreach (var customer in customerModel)
                 {
-        <tr>
-            <td>@customer.ID</td>
-            <td>@customer.CustomerPhone</td>
-            <td>@customer.CustomerName</td>
-            <td>@customer.CustomerEmail</td>
-            <td>@customer.CustomerCompany</td>
-            <td>
-                <a class="btn btn-primary" href='/editArticle/@customer.ID'>Edit</a>  |
-                <a class="btn btn-danger" @onclick="() => DeleteArticle(customer.ID)">Delete</a>
-            </td>
-        </tr>
+                    <tr>
+                        <td>@customer.CustomerPhone</td>
+                        <td>@customer.CustomerName</td>
+                        <td>@customer.CustomerEmail</td>
+                        <td>@customer.CustomerCompany</td>
+                        <td>
+                            <a class="btn btn-primary" href='/editArticle/@customer.ID'>Edit</a>  |
+                            <a class="btn btn-danger" @onclick="() => DeleteArticle(customer.ID)">Delete</a>
+                        </td>
+                    </tr>
                 }
             }
 
@@ -144,7 +140,7 @@ else
         pagerSize = 3;
         pageSize = 5;
         curPage = 1;
-        customerModel = await CustomerManager.ListAll(searchTerm );
+        customerModel = await CustomerManager.ListAll(searchTerm);
         totalRecords = await CustomerManager.Count(searchTerm);
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
         SetPagerSize("forward");
@@ -162,7 +158,7 @@ else
 
     private async Task<List<Customer>> SortRecords(string columnName, string dir)
     {
-        return await CustomerManager.ListAll(searchTerm );
+        return await CustomerManager.ListAll(searchTerm);
     }
 
     private async Task SortTable(string columnName)

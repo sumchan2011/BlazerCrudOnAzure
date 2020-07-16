@@ -19,7 +19,7 @@ namespace BlazorCRUD1.Concrete
 
         public Task<int> Create(Product product)
         {
-            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Product](ProductName,ProductDetails,ProductOrigin,ProductPrice,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{product.ProductName}','{product.ProductDetails}','{product.ProductOrigin}','{product.ProductPrice}','{false}','{product.UpdatedDateTime}','{product.UpdatedBy}')", null,
+            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Product](ProductName,ProductDetails,ProductOrigin,ProductPrice,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{product.ProductName}','{product.ProductDetails}','{product.ProductOrigin}','{product.ProductPrice}','{false}',CONVERT(datetime,'{product.UpdatedDateTime}',103),'{product.UpdatedBy}')", null,
                     commandType: CommandType.Text));
             return productId;
         }
@@ -77,7 +77,7 @@ namespace BlazorCRUD1.Concrete
         public Task<List<Product>> ListFilterAll(int skip, int take, string orderBy, string direction, string name, string origin, double lower, double upper)
         {
             var product = Task.FromResult(_dapperManager.GetAll<Product>
-                ($"SELECT * FROM [Product] WHERE ProductName like '%{name}%' AND ProductOrigin like '%{origin}%' AND ProductPrice > {lower} AND ProductPrice < {upper}  AND DELETED = 'False' ORDER BY {orderBy} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY; ", null, commandType: CommandType.Text));
+                ($"SELECT P.ID, P.ProductName, P.ProductPrice, P.ProductOrigin, P.ProductDetails , sum(S.StockQty) As ProductTotalStock FROM [Product] as P Inner Join [Stock] as S on P.ID = S.ProductID WHERE P.ProductName like '%{name}%' AND P.ProductOrigin like '%{origin}%' AND P.ProductPrice > {lower} AND P.ProductPrice < {upper}  AND P.DELETED = 'False' group by P.ID, P.ProductName, P.ProductOrigin, P.ProductPrice, P.ProductDetails ORDER BY {orderBy} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY ; ", null, commandType: CommandType.Text));
             return product;
         }
 

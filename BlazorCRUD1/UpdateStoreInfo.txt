@@ -30,3 +30,5 @@ CREATE PROCEDURE [dbo].[SP_Update_Store]
 		WHERE ID = @ID 
 	           
 		END;
+
+		//"Server=tcp:azure-test-cpeg.database.windows.net,1433;Initial Catalog=AzureTestDB;Persist Security Info=True;User ID=samsonchan;Password=samgorisGOOD123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
