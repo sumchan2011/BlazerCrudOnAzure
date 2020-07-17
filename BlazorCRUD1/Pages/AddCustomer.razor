@@ -1,0 +1,46 @@
+﻿@page "/addCustomer"
+@inject ICustomerManager customerManager
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IStringLocalizer<AddCustomer> localizer
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+
+                <label for="Name" class="control-label">@localizer["customerName"]</label>
+                <input for="Name" class="form-control" @bind-value="@customer.CustomerName" />
+
+                <label for="Name" class="control-label">@localizer["customerPhone"]</label>
+                <input for="Name" class="form-control" @bind-value="@customer.CustomerPhone" />
+
+                <label for="Name" class="control-label">@localizer["customerEmail"]</label>
+                <input for="Name" class="form-control" @bind-value="@customer.CustomerEmail" />
+
+                <label for="Name" class="control-label">@localizer["customerCompany"]</label>
+                <input for="Name" class="form-control" @bind-value="@customer.CustomerCompany" />
+
+
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" @onclick="() => ConfirmedUpdate()">@localizer["confirm"]</button>
+                <button type="button" class="btn btn-danger" @onclick="() => Cancel()">@localizer["cancel"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    public Customer customer = new Customer();
+
+    void ConfirmedUpdate()
+    {
+        BlazoredModal.Close(ModalResult.Ok(customer));
+    }
+
+    void Cancel()
+    {
+        BlazoredModal.Cancel();
+    }
+}

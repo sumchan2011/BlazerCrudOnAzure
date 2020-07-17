@@ -18,19 +18,9 @@ namespace BlazorCRUD1.Concrete
 
         public Task<int> Create(Customer customer)
         {
-            var dbPara = new DynamicParameters();
-            /*
-            dbPara.Add("CustomerPhone", customer.CustomerPhone, DbType.Int32);
-            dbPara.Add("CustomerName", customer.CustomerName, DbType.String);
-            dbPara.Add("CustomerCompany", customer.CustomerCompany, DbType.String);
-            dbPara.Add("CustomerEmail", customer.CustomerEmail, DbType.String);
-            dbPara.Add("LastUpdateDate", customer.LastUpdateDate, DbType.DateTime);
-            dbPara.Add("LastUpdateUser", customer.LastUpdateUser, DbType.String);
-            */
-            var articleId = Task.FromResult(_dapperManager.Insert<int>("[dbo].[SP_Add_Article]",
-                            dbPara,
-                            commandType: CommandType.StoredProcedure));
-            return articleId;
+            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Product](ProductName,ProductDetails,ProductOrigin,ProductPrice,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{customer.CustomerName}','{customer.CustomerPhone}','{customer.CustomerEmail}','{customer.CustomerCompany}','{false}',CONVERT(datetime,'{customer.UpdatedDateTime}',103),'{customer.UpdatedBy}')", null,
+                    commandType: CommandType.Text));
+            return productId;
         }
 
         public Task<Customer> GetById(int id)
@@ -58,6 +48,13 @@ namespace BlazorCRUD1.Concrete
         {
             var customer = Task.FromResult(_dapperManager.GetAll<Customer>
                 ($"SELECT * FROM [Customer] WHERE CAST(CustomerPhone AS VARCHAR(20)) LIKE '{customerID}%';", null, commandType: CommandType.Text));
+            return customer;
+        }
+
+        public Task<List<Customer>> ListAll(int skip, int take, string orderBy, string direction = "DESC", string customerID = "")
+        {
+            var customer = Task.FromResult(_dapperManager.GetAll<Customer>
+                ($"SELECT * FROM [Customer] WHERE CAST(CustomerPhone AS VARCHAR(20)) LIKE '{customerID}%' ORDER BY {orderBy} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY; ", null, commandType: CommandType.Text));
             return customer;
         }
 

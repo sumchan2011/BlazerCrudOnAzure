@@ -1,6 +1,7 @@
 ﻿@page "/customerlist"
 @inject ICustomerManager CustomerManager
 @inject IStringLocalizer<FetchCustomer> localizer
+@inject IModalService Modal
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -25,7 +26,7 @@
 </style>
 
 <div>
-    <a class="btn btn-primary" href='/addArticle'>Add</a>
+    <a class="btn btn-primary" @onclick="() => AddCustomerDialog()">@localizer["addCustomer"]</a>
 </div>
 <br />
 
@@ -36,7 +37,7 @@
 else
 {
     <div class="row col-md-3 pull-right">
-        <input type="text" id="txtSearch" placeholder="Search Titles..." class="form-control" @bind="SearchTerm" @bind:event="oninput" />
+        <input type="text" id="txtSearch" placeholder=@localizer["searchByPhone"] class="form-control" @bind="SearchTerm" @bind:event="oninput" />
     </div>
     <table class="table table-bordered table-hover">
         <thead>
@@ -82,8 +83,8 @@ else
                         <td>@customer.CustomerEmail</td>
                         <td>@customer.CustomerCompany</td>
                         <td>
-                            <a class="btn btn-primary" href='/editArticle/@customer.ID'>Edit</a>  |
-                            <a class="btn btn-danger" @onclick="() => DeleteArticle(customer.ID)">Delete</a>
+                            <a class="btn btn-primary" href='/editArticle/@customer.ID'>@localizer["edit"]</a>  |
+                            <a class="btn btn-danger" @onclick="() => DeleteArticle(customer.ID)">@localizer["delete"]</a>
                         </td>
                     </tr>
                 }
@@ -92,7 +93,7 @@ else
         </tbody>
     </table>
     <div class="pagination">
-        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("previous"))>Prev</button>
+        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("previous"))>@localizer["prev"]</button>
 
         @for (int i = startPage; i <= endPage; i++)
         {
@@ -102,7 +103,7 @@ else
             </button>
         }
 
-        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("next"))>Next</button>
+        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("next"))>@localizer["next"]</button>
 
     </div>
 }
@@ -144,6 +145,26 @@ else
         totalRecords = await CustomerManager.Count(searchTerm);
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
         SetPagerSize("forward");
+    }
+
+    public async void AddCustomerDialog()
+    {
+        var formModal = Modal.Show<AddCustomer>(localizer["addCustomer"]);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Customer temp = (Customer)result.Data;
+            temp.UpdatedBy = "Stanley";
+            temp.UpdatedDateTime = DateTime.Now;
+            CustomerManager.Create(temp).Wait();
+            customerModel = await CustomerManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir,"");
+            StateHasChanged();
+        }
     }
 
 

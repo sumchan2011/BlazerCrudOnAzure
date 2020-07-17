@@ -363,10 +363,14 @@ C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcore
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.dll
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.pdb
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.genruntimeconfig.cache
-C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.csprojAssemblyReference.cache
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Shared.NavMenu.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Shared.NavMenu.zh-hk.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.FetchCustomer.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.FetchCustomer.zh-hk.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchCustomer.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\FetchCustomer.razor.g.cs
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.AddCustomer.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.AddCustomer.zh-hk.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\AddCustomer.razor.g.cs
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\AddCustomer.razor.g.cs
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.csprojAssemblyReference.cache

@@ -12,5 +12,6 @@ namespace BlazorCRUD1.Contracts
         Task<int> Update(Customer customer);
         Task<Customer> GetById(int Id);
         Task<List<Customer>> ListAll(string customerPhone);
+        Task<List<Customer>> ListAll(int skip, int take, string orderBy, string direction, string customerPhone);
     }
 }

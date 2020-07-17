@@ -120,6 +120,9 @@
   <data name="action" xml:space="preserve">
     <value>功能</value>
   </data>
+  <data name="addCustomer" xml:space="preserve">
+    <value>新增顧客</value>
+  </data>
   <data name="customerCompany" xml:space="preserve">
     <value>公司名稱</value>
   </data>
@@ -132,7 +135,22 @@
   <data name="customerPhone" xml:space="preserve">
     <value>電話號碼</value>
   </data>
+  <data name="delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>下一頁</value>
+  </data>
   <data name="noCustomer" xml:space="preserve">
     <value>沒有顧客資訊</value>
+  </data>
+  <data name="prev" xml:space="preserve">
+    <value>上一頁</value>
+  </data>
+  <data name="searchByPhone" xml:space="preserve">
+    <value>以電話號碼搜索</value>
   </data>
 </root>
