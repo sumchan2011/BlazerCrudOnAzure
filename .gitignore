@@ -1,0 +1,9 @@
+
+.vs/BlazorCRUD1/xs/project-cache/BlazorCRUD1-Debug.json
+.vs/BlazorCRUD1/xs/UserPrefs.xml
+.vs/BlazorCRUD1/xs/project-cache/BlazorCRUD1-Release.json
+*.log
+*.cache
+*.dll
+BlazorCRUD1/obj/**
+BlazorCRUD1/bin/**
