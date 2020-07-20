@@ -1,0 +1,437 @@
+﻿@page "/saleslist"
+@inject IProductManager productManager
+@inject ISaleTxnManager saleManager
+@inject IStockManager stockManager
+@inject ICustomerManager customerManager
+@inject IOrderManager orderManager
+@inject IModalService Modal
+@inject IStringLocalizer<Index> localizer
+@inject IStoreManager storeManager
+
+<div class="search-wrapper">
+    <div class="search-title"><i class="fas fa-filter"></i>@localizer["filter"]</div>
+    <form id="list-table-search-form" class="search-form" action="/receipt/export" method="post">
+        <div class="form-row">
+
+            <div class="form-group col-md-2">
+                <label for="productName">@localizer["productName"]</label>
+                <input id="productName" name="productName" type="text" @bind="productName" @bind:event="oninput" class="form-control">
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="productOrigin">@localizer["productOrigin"]</label>
+                <input id="productOrigin" name="productOrigin" type="text" @bind="productOrigin" @bind:event="oninput" class="form-control">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="minAmt">@localizer["productPrice"]</label>
+                <div class="input-group input-amtrange">
+                    <input id="minAmt" name="minAmt" type="text" @bind="lowerAmt" @bind:event="oninput" class="form-control">
+                    <div class="input-group-between">
+                        <div class="input-group-text">@localizer["to"]</div>
+                    </div>
+                    <input id="maxAmt" name="maxAmt" type="text" @bind="upperAmt" @bind:event="oninput" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group col-md-2"></div>
+            <div class="form-group col text-right">
+                <a class="btn btn-wide btn-outline-secondary" @onclick="() => FilterClear()">@localizer["clear"]</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@if (IsShow)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="sort-th">ID<span class="fa"></span></th>
+                <th class="sort-th">@localizer["productName"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["productOrigin"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["productPrice"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["totalStock"]<span class="fa"></span></th>
+                <th>@localizer["action"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (productModel == null || productModel.Count == 0)
+            {
+                <tr><td colspan="7">@localizer["noProduct"]</td></tr>
+            }
+            else
+            {
+                foreach (var product in productModel)
+                {
+                    <tr>
+                        <td>@product.ID</td>
+                        <td>@product.ProductName</td>
+                        <td>@product.ProductOrigin</td>
+                        <td>$@product.ProductPrice</td>
+                        <td>@displayStockValue(product.ProductTotalStock, storeInfo.StoreUnit)</td>
+                        <a class="btn btn-primary" @onclick="() => AddtoBucket(product)">@localizer["buy"]</a>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+}
+
+
+<div class="row col-md-3 pull-right">
+    <input type="text" id="txtSearch" placeholder=@localizer["searchByPhone"] class="form-control" @bind="CustomerID" @bind:event="oninput" />
+</div>
+
+<br />
+
+@if (IsShow2)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="sort-th">@localizer["customerName"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["customerPhone"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["customerCompany"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["customerEmail"]<span class="fa"></span></th>
+                <th>@localizer["action"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (customerModel == null || customerModel.Count == 0)
+            {
+                <tr><td colspan="5">@localizer["noCustomer"]</td></tr>
+            }
+            else
+            {
+
+                foreach (var customer in customerModel)
+                {
+                    <tr>
+                        <td>@customer.CustomerName</td>
+                        <td>@customer.CustomerPhone</td>
+                        <td>@customer.CustomerCompany</td>
+                        <td>@customer.CustomerEmail</td>
+                        <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">@localizer["select"]</a>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+}
+
+@if (orderEntity.OrderCustomer != null)
+{
+    <h4>@localizer["customerName"]: @orderEntity.OrderCustomer.CustomerName</h4>
+    <h4>@localizer["customerPhone"]: @orderEntity.OrderCustomer.CustomerPhone</h4>
+    <h4>@localizer["customerCompany"]: @orderEntity.OrderCustomer.CustomerCompany</h4>
+    <h4>@localizer["customerEmail"]: @orderEntity.OrderCustomer.CustomerEmail</h4>
+}
+
+<h3>@localizer["orderDetails"]</h3>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="sort-th">ID<span class="fa "></span></th>
+            <th class="sort-th">@localizer["productName"]<span class="fa "></span></th>
+            <th class="sort-th">@localizer["productOrigin"]<span class="fa"></span></th>
+            <th class="sort-th">@localizer["qty"]<span class="fa"></span></th>
+            <th class="sort-th">@localizer["productPrice"]<span class="fa "></span></th>
+            <th class="sort-th">@localizer["subTotal"]<span class="fa "></span></th>
+            <th class="sort-th">@localizer["status"]<span class="fa"></span></th>
+            <th>@localizer["action"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (saleTxnModel == null || saleTxnModel.Count == 0)
+        {
+            <tr><td colspan="8">@localizer["noOrder"]</td></tr>
+        }
+        else
+        {
+            orderEntity.OrderTotalTxn = 0;
+
+            foreach (var saleItem in saleTxnModel)
+            {
+                <tr>
+                    <td>@saleItem.SaleProduct.ID</td>
+                    <td>@saleItem.SaleProduct.ProductName</td>
+                    <td>@saleItem.SaleProduct.ProductOrigin</td>
+                    <td>
+                        <input type=number step=0.01 @bind-value:event="oninput" @bind-value="@saleItem.SaleQty" />
+                        <h6>@localizer["totalStock"]:@displayStockValue(saleItem.SaleProduct.ProductTotalStock, storeInfo.StoreUnit)</h6>
+                    </td>
+                    <td>$@saleItem.SaleProduct.ProductPrice</td>
+                    <td>$@saleItem.CalculateSubTotal()</td>
+                    <!--<td>@saleItem.SaleStatus</td>-->
+                    <td>
+                        <select @bind="saleItem.SaleStatus">
+                            <option value="0">@localizer["allDelivery"]</option>
+                            <option value="1">
+                                @localizer["partialDelivery"]
+                            </option>
+                            <option value="2">@localizer["noDelivery"]</option>
+                        </select>
+                        @if (saleItem.SaleStatus == 1)
+                        {
+                            <input type="number" step="0.01" class="form-control" @bind-value:event="oninput" @bind-value="@saleItem.SaleReceivedQty" />
+                        }
+                        else if (saleItem.SaleStatus == 0)
+                        {
+                            saleItem.SaleReceivedQty = saleItem.SaleQty;
+                        }
+                        else
+                        {
+                            saleItem.SaleReceivedQty = 0;
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" @onclick="() => RemoveFromBucket(saleItem)">@localizer["clear"]</a>
+                    </td>
+                </tr>
+
+                orderEntity.OrderTotalTxn += saleItem.SaleSubTotal;
+            }
+        }
+
+    </tbody>
+</table>
+
+
+<h4>@localizer["totalAmount"]: $@orderEntity.OrderTotalTxn</h4>
+
+
+<input type="checkbox" id="enable" name="allowAdjust" @bind-value="@isAdjustAllow">
+<label>@localizer["allowAdjust"]</label>
+
+@if (isAdjustAllow)
+{
+    <h4>@localizer["adjustedTotalAmount"]: <input type=number step=0.01 @bind-value:event="oninput" @bind-value="@orderEntity.OrderNetAmt" /></h4>
+    orderEntity.OrderDiscountAmt = orderEntity.OrderTotalTxn - orderEntity.OrderNetAmt;
+}
+else
+{
+    orderEntity.OrderDiscountAmt = 0;
+    orderEntity.OrderNetAmt = orderEntity.OrderTotalTxn;
+}
+
+<br>
+<button class="btn btn-primary" @onclick="() => ConfirmTransaction(orderEntity)">@localizer["confirm"]</button>
+
+
+
+@code {
+
+    List<Product> productModel;
+    Product productEntity = new Product();
+    Store storeInfo;
+
+    List<SaleTxn> saleTxnModel;
+    List<Customer> customerModel;
+
+    Order orderEntity = new Order();
+
+    Boolean isProductSearchHidden = false;
+
+
+    private Boolean isAdjustAllow { get; set; }
+
+    private string searchTerm;
+    private string CustomerID
+    {
+        get { return searchTerm; }
+        set
+        {
+            searchTerm = value;
+            FilterCustomer(searchTerm).Wait();
+        }
+    }
+
+    //On data to seach.
+    string searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt;
+    //On bind variable
+    string productName
+    {
+        get { return searchProuctName; }
+        set
+        {
+            searchProuctName = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    string productOrigin
+    {
+        get { return searchProductOrigin; }
+        set
+        {
+            searchProductOrigin = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    string lowerAmt
+    {
+        get { return searchLowerAmt; }
+        set
+        {
+            searchLowerAmt = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    string upperAmt
+    {
+        get { return searchUpperAmt; }
+        set
+        {
+            searchUpperAmt = value;
+            FilterProduct(searchProuctName, searchProductOrigin, searchLowerAmt, searchUpperAmt).Wait();
+        }
+    }
+
+    private bool IsShow { get; set; } = false;
+    private void Show()
+    {
+        IsShow = !IsShow;
+    }
+
+    private bool IsShow2 { get; set; } = false;
+    private void Show2()
+    {
+        IsShow2 = !IsShow2;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        storeInfo = await storeManager.GetById(1);
+    }
+
+    protected async Task FilterProduct(String name, String origin, String lowerAmt, String upperAmt)
+    {
+        IsShow = true;
+
+        if (String.IsNullOrEmpty(lowerAmt))
+            lowerAmt = "0";
+
+        if (String.IsNullOrEmpty(upperAmt))
+            upperAmt = "10000000000000000000000";
+
+        if (String.IsNullOrEmpty(name))
+            name = "";
+
+        if (String.IsNullOrEmpty(origin))
+            origin = "";
+
+        productModel = await productManager.SimplyListFilterAll(name, origin, Double.Parse(lowerAmt), Double.Parse(upperAmt));
+    }
+
+    protected void FilterClear()
+    {
+        searchProuctName = searchProductOrigin = searchLowerAmt = searchUpperAmt = null;
+        this.IsShow = false;
+        StateHasChanged();
+    }
+
+    public async void AddtoBucket(Product product)
+    {
+        SaleTxn saleItem = new SaleTxn();
+        saleItem.SaleProduct = product;
+        saleItem.SaleStatus = 0;
+        saleItem.SaleQty = 1.0;
+        saleItem.SaleSubTotal = saleItem.SaleQty * saleItem.SaleProduct.ProductPrice;
+        saleItem.UpdatedBy = "SAM";
+        saleItem.UpdatedDateTime = DateTime.Now;
+
+        if (saleTxnModel == null)
+            saleTxnModel = new List<SaleTxn>();
+
+        if (saleItem.ProductStock == null)
+            saleItem.ProductStock = new List<Stock>();
+
+        saleItem.ProductStock = await stockManager.SimpleListAll(product.ID);
+
+
+        productModel.Remove(product);
+
+        saleTxnModel.Add(saleItem);
+
+        orderEntity.OrderTotalTxn += saleItem.SaleSubTotal;
+        orderEntity.OrderNetAmt += saleItem.SaleSubTotal;
+    }
+
+    public void RemoveFromBucket(SaleTxn saleItem)
+    {
+        orderEntity.OrderTotalTxn -= saleItem.SaleSubTotal;
+        orderEntity.OrderNetAmt -= saleItem.SaleSubTotal;
+
+        saleTxnModel.Remove(saleItem);
+    }
+
+    protected async Task FilterCustomer(String customerId)
+    {
+        IsShow2 = true;
+
+        customerModel = await customerManager.ListAll(customerId);
+    }
+
+    public void SelectCustomer(Customer customer)
+    {
+        IsShow2 = false;
+
+        orderEntity.OrderCustomer = customer;
+    }
+
+    public async void ConfirmTransaction(Order order)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(order), order);
+
+        var formModal = Modal.Show<ConfirmTxn>(localizer["confirm"], parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Order Temp = (Order)result.Data;
+
+            orderEntity.UpdatedBy = "SAM";
+            orderEntity.UpdatedDateTime = DateTime.Now;
+
+            if (orderEntity.OrderCustomer == null)
+                orderEntity.OrderCustomer = new Customer();
+
+            int order_id = await orderManager.Create(orderEntity);
+
+            foreach (SaleTxn item in saleTxnModel)
+            {
+                item.SaleTxnOrderID = order_id;
+                item.UpdatedBy = "SAM";
+                item.UpdatedDateTime = DateTime.Now;
+                await saleManager.Create(item);
+            }
+        }
+    }
+
+    public string displayStockValue(double stock, int unitType)
+    {
+        Dictionary<string, double> temp = BlazorCRUD1.Resources.Utils.Utils.convertStockUnit(stock, unitType);
+        switch (unitType)
+        {
+            case 0:
+                return temp["stock"] + localizer["kg"];
+            case 1:
+                return temp["stock"] + localizer["gun"];
+            default:
+                return temp["stock"].ToString();
+        }
+    }
+}

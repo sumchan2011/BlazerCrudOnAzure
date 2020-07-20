@@ -1,9 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\StanleyYan\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\StanleyYan\\.nuget\\packages",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      "/Users/chansum/.dotnet/store/|arch|/|tfm|",
+      "/Users/chansum/.nuget/packages"
     ]
   }
 }
