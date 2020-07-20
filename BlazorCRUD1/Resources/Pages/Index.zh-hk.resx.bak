@@ -118,42 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="action" xml:space="preserve">
-    <value>Action</value>
+    <value>功能</value>
   </data>
-  <data name="addCustomer" xml:space="preserve">
-    <value>Add New Customer</value>
+  <data name="addNewProduct" xml:space="preserve">
+    <value>新增貨品</value>
   </data>
-  <data name="customerCompany" xml:space="preserve">
-    <value>Company</value>
-  </data>
-  <data name="customerEmail" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="customerName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="customerPhone" xml:space="preserve">
-    <value>Phone</value>
+  <data name="clear" xml:space="preserve">
+    <value>清除</value>
   </data>
   <data name="delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>停售</value>
+  </data>
+  <data name="deleteProduct" xml:space="preserve">
+    <value>停售貨品</value>
   </data>
   <data name="edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>修改</value>
   </data>
-  <data name="editCustomer" xml:space="preserve">
-    <value>Edit Customer Info</value>
+  <data name="editProduct" xml:space="preserve">
+    <value>修改貨品</value>
+  </data>
+  <data name="filter" xml:space="preserve">
+    <value>篩選器</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>編號</value>
+  </data>
+  <data name="inStock" xml:space="preserve">
+    <value>存貨</value>
   </data>
   <data name="next" xml:space="preserve">
-    <value>Next</value>
+    <value>下一頁</value>
   </data>
-  <data name="noCustomer" xml:space="preserve">
-    <value>No Customer Record</value>
+  <data name="noProduct" xml:space="preserve">
+    <value>沒有貨品上架</value>
   </data>
   <data name="prev" xml:space="preserve">
-    <value>Prev</value>
+    <value>上一頁</value>
   </data>
-  <data name="searchByPhone" xml:space="preserve">
-    <value>Search By Phone</value>
+  <data name="productDetails" xml:space="preserve">
+    <value>貨品資訊</value>
+  </data>
+  <data name="productName" xml:space="preserve">
+    <value>貨品名稱</value>
+  </data>
+  <data name="productOrigin" xml:space="preserve">
+    <value>貨品產地</value>
+  </data>
+  <data name="productPrice" xml:space="preserve">
+    <value>單位售價</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="totalStock" xml:space="preserve">
+    <value>總存貨量</value>
   </data>
 </root>

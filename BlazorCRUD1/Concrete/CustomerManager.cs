@@ -18,7 +18,7 @@ namespace BlazorCRUD1.Concrete
 
         public Task<int> Create(Customer customer)
         {
-            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Product](ProductName,ProductDetails,ProductOrigin,ProductPrice,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{customer.CustomerName}','{customer.CustomerPhone}','{customer.CustomerEmail}','{customer.CustomerCompany}','{false}',CONVERT(datetime,'{customer.UpdatedDateTime}',103),'{customer.UpdatedBy}')", null,
+            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Customer](CustomerName,CustomerPhone,CustomerEmail,CustomerCompany,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{customer.CustomerName}','{customer.CustomerPhone}','{customer.CustomerEmail}','{customer.CustomerCompany}','{false}',CONVERT(datetime,'{customer.UpdatedDateTime}',103),'{customer.UpdatedBy}')", null,
                     commandType: CommandType.Text));
             return productId;
         }
@@ -61,14 +61,12 @@ namespace BlazorCRUD1.Concrete
         public Task<int> Update(Customer customer)
         {
             var dbPara = new DynamicParameters();
-            /*
+            dbPara.Add("ID", customer.ID, DbType.Int32);
             dbPara.Add("CustomerPhone", customer.CustomerPhone, DbType.Int32);
             dbPara.Add("CustomerName", customer.CustomerName, DbType.String);
             dbPara.Add("CustomerCompany", customer.CustomerCompany, DbType.String);
             dbPara.Add("CustomerEmail", customer.CustomerEmail, DbType.String);
-            dbPara.Add("LastUpdateDate", customer.LastUpdateDate, DbType.DateTime);
-            dbPara.Add("LastUpdateUser", customer.LastUpdateUser, DbType.String);*/
-            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Article]",
+            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Customer]",
                             dbPara,
                             commandType: CommandType.StoredProcedure));
             return updateArticle;

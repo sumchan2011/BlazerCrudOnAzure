@@ -120,8 +120,29 @@
   <data name="action" xml:space="preserve">
     <value>Action</value>
   </data>
-  <data name="addCustomer" xml:space="preserve">
-    <value>Add New Customer</value>
+  <data name="addNewProduct" xml:space="preserve">
+    <value>Add New Product</value>
+  </data>
+  <data name="addStock" xml:space="preserve">
+    <value>Add Stock</value>
+  </data>
+  <data name="adjustedTotalAmount" xml:space="preserve">
+    <value>Adjusted Amount</value>
+  </data>
+  <data name="allDelivery" xml:space="preserve">
+    <value>All Received</value>
+  </data>
+  <data name="allowAdjust" xml:space="preserve">
+    <value>Adjustment</value>
+  </data>
+  <data name="buy" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="confirm" xml:space="preserve">
+    <value>Confirm Order</value>
   </data>
   <data name="customerCompany" xml:space="preserve">
     <value>Company</value>
@@ -138,11 +159,29 @@
   <data name="delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="deleteProduct" xml:space="preserve">
+    <value>Delete Product</value>
   </data>
-  <data name="editCustomer" xml:space="preserve">
-    <value>Edit Customer Info</value>
+  <data name="edit" xml:space="preserve">
+    <value>EDIT</value>
+  </data>
+  <data name="editProduct" xml:space="preserve">
+    <value>Edit Product</value>
+  </data>
+  <data name="filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="gun" xml:space="preserve">
+    <value>斤</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="inStock" xml:space="preserve">
+    <value>In Stock</value>
+  </data>
+  <data name="kg" xml:space="preserve">
+    <value>Kg</value>
   </data>
   <data name="next" xml:space="preserve">
     <value>Next</value>
@@ -150,10 +189,67 @@
   <data name="noCustomer" xml:space="preserve">
     <value>No Customer Record</value>
   </data>
+  <data name="noDelivery" xml:space="preserve">
+    <value>Not Received</value>
+  </data>
+  <data name="noOrder" xml:space="preserve">
+    <value>No Order Details</value>
+  </data>
+  <data name="noProduct" xml:space="preserve">
+    <value>No Active Product</value>
+  </data>
+  <data name="orderDetails" xml:space="preserve">
+    <value>Order Details</value>
+  </data>
+  <data name="partialDelivery" xml:space="preserve">
+    <value>Partial Recevied</value>
+  </data>
   <data name="prev" xml:space="preserve">
     <value>Prev</value>
   </data>
+  <data name="productDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="productName" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="productOrigin" xml:space="preserve">
+    <value>Product Origin</value>
+  </data>
+  <data name="productPrice" xml:space="preserve">
+    <value>Unit Price</value>
+  </data>
+  <data name="qty" xml:space="preserve">
+    <value>QTY</value>
+  </data>
   <data name="searchByPhone" xml:space="preserve">
     <value>Search By Phone</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Order Status</value>
+  </data>
+  <data name="stockCost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="stockDate" xml:space="preserve">
+    <value>Stock Date</value>
+  </data>
+  <data name="stockQTY" xml:space="preserve">
+    <value>QTY</value>
+  </data>
+  <data name="subTotal" xml:space="preserve">
+    <value>Sub Total</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>TO</value>
+  </data>
+  <data name="totalAmount" xml:space="preserve">
+    <value>Total Amount</value>
+  </data>
+  <data name="totalStock" xml:space="preserve">
+    <value>Total Stock</value>
   </data>
 </root>

@@ -18,6 +18,6 @@ namespace BlazorCRUD1.Models
 
         public List<Stock> ProductStock { get; set; }
 
-        public double SaleRemainQty { get; set; }
+        public double SaleReceivedQty { get; set; }
     }
 }

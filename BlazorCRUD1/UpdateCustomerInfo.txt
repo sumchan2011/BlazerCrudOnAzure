@@ -1,0 +1,31 @@
+CREATE PROCEDURE [dbo].[SP_Update_Customer] 
+		@ID 				INT,   
+		@CustomerPhone  	INT,
+		@CustomerName   	NVARCHAR (255) 	,
+		@CustomerCompany	NVARCHAR (255)  ,
+		@CustomerEmail  	NVARCHAR (255)  ,
+	AS    
+		BEGIN    
+
+		UPDATE [Store] SET
+			CustomerPhone 		 = @CustomerPhone 				
+			CustomerName	 = @CustomerName	
+			CustomerCompany  = @CustomerCompany 
+			CustomerEmail = @CustomerEmail
+		
+		WHERE ID = @ID 
+	           
+		END;
+
+		//"Server=tcp:azure-test-cpeg.database.windows.net,1433;Initial Catalog=AzureTestDB;Persist Security Info=True;User ID=samsonchan;Password=samgorisGOOD123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
+
+
+    [ID]              INT            IDENTITY (1, 1) NOT NULL,
+    [CustomerPhone]   INT            NOT NULL,
+    [CustomerName]    NVARCHAR (255) NOT NULL,
+    [CustomerCompany] NVARCHAR (255) NOT NULL,
+    [CustomerEmail]   NVARCHAR (255) NOT NULL,
+    [DELETED]         BIT            DEFAULT ((0)) NOT NULL,
+    [UpdatedDateTime] DATETIME       NOT NULL,
+    [UpdatedBy]       NVARCHAR (255) NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)

@@ -117,43 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="action" xml:space="preserve">
-    <value>Action</value>
+  <data name="adjustedTotalAmount" xml:space="preserve">
+    <value>Adjusted Amount</value>
   </data>
-  <data name="addCustomer" xml:space="preserve">
-    <value>Add New Customer</value>
+  <data name="allowAdjust" xml:space="preserve">
+    <value>Adjustment</value>
   </data>
-  <data name="customerCompany" xml:space="preserve">
-    <value>Company</value>
+  <data name="back" xml:space="preserve">
+    <value>Back</value>
   </data>
-  <data name="customerEmail" xml:space="preserve">
-    <value>Email</value>
+  <data name="confirm" xml:space="preserve">
+    <value>Confirm</value>
   </data>
-  <data name="customerName" xml:space="preserve">
-    <value>Name</value>
+  <data name="depositeAmt" xml:space="preserve">
+    <value>Deposite</value>
   </data>
-  <data name="customerPhone" xml:space="preserve">
-    <value>Phone</value>
-  </data>
-  <data name="delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="editCustomer" xml:space="preserve">
-    <value>Edit Customer Info</value>
-  </data>
-  <data name="next" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="noCustomer" xml:space="preserve">
-    <value>No Customer Record</value>
-  </data>
-  <data name="prev" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="searchByPhone" xml:space="preserve">
-    <value>Search By Phone</value>
+  <data name="totalAmount" xml:space="preserve">
+    <value>Total Amount</value>
   </data>
 </root>

@@ -373,4 +373,12 @@ C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcore
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.AddCustomer.zh-hk.resources
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\AddCustomer.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\AddCustomer.razor.g.cs
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.EditCustomer.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.EditCustomer.zh-hk.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\EditCustomer.razor.g.cs
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\Razor\Pages\EditCustomer.razor.g.cs
 C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.csprojAssemblyReference.cache
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.Index.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.Index.zh-hk.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.ConfirmTxn.resources
+C:\Users\StanleyYan\source\repos\BlazerCrudOnAzure\BlazorCRUD1\obj\Debug\netcoreapp3.1\BlazorCRUD1.Resources.Pages.ConfirmTxn.zh-hk.resources

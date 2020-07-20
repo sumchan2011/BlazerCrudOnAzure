@@ -21,7 +21,7 @@ namespace BlazorCRUD1.Entities
 
         public int SaleTxnOrderID { get; set; }
 
-        public double SaleRemainQty { get; set; }
+        public double SaleReceivedQty { get; set; }
 
         public double CalculateSubTotal()
         {

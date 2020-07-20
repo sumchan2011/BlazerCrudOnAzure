@@ -83,7 +83,7 @@ else
                         <td>@customer.CustomerEmail</td>
                         <td>@customer.CustomerCompany</td>
                         <td>
-                            <a class="btn btn-primary" href='/editArticle/@customer.ID'>@localizer["edit"]</a>  |
+                            <a class="btn btn-primary" @onclick="() => EditCustomerDialog(customer)">@localizer["edit"]</a>  |
                             <a class="btn btn-danger" @onclick="() => DeleteArticle(customer.ID)">@localizer["delete"]</a>
                         </td>
                     </tr>
@@ -165,6 +165,31 @@ else
             customerModel = await CustomerManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir,"");
             StateHasChanged();
         }
+    }
+
+    public async void EditCustomerDialog(Customer customer)
+    {
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(customer), customer);
+
+        var formModal = Modal.Show<EditCustomer>(localizer["editCustomer"], parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            UpdateCustomer((Customer)result.Data).Wait();
+        }
+    }
+
+    protected async Task UpdateCustomer(Customer customer)
+    {
+        await CustomerManager.Update(customer);
+        StateHasChanged();
     }
 
 

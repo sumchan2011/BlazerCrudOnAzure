@@ -1,16 +1,21 @@
 ﻿@page "/confirmTxn"
 @inject IArticleManager articleManager
+@inject IStringLocalizer<ConfirmTxn> localizer
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
-<h1>Confirm Order</h1>
+<h3>@localizer["totalAmount"]: $@order.OrderTotalTxn</h3>
 
-<h3>Total Amt: @order.OrderTotalTxn</h3>
-<h3>Adjust Amt: @order.OrderDiscountAmt</h3>
-<h3>Net Amt: @order.OrderNetAmt</h3>
-<h4>Deposit Amt</h4><input placeholder="Deposit" type=number step=0.01 @bind-value:event="oninput" @bind-value="@paymentAmt" />
+@if (order.OrderDiscountAmt != 0)
+{
+    <h3>@localizer["adjustedTotalAmount"]: @order.OrderNetAmt</h3>
+}
+<br>
 
-<button @onclick="ConfirmedOrder" class="btn btn-primary">Submit</button>
-<button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+<h4>@localizer["depositeAmt"]</h4>
+<input placeholder="Deposit" type=number step=0.01 @bind-value:event="oninput" @bind-value="@paymentAmt" />
+
+<button @onclick="ConfirmedOrder" class="btn btn-primary">@localizer["confirm"]</button>
+<button @onclick="Cancel" class="btn btn-secondary">@localizer["back"]</button>
 
 
 @code {
@@ -27,7 +32,7 @@
         paymentAmt = order.OrderNetAmt;
     }
 
-    protected async Task ConfirmedOrder()
+    void ConfirmedOrder()
     {
         order.OrderDiscountAmt = paymentAmt;
         BlazoredModal.Close(ModalResult.Ok(order));

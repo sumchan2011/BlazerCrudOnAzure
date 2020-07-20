@@ -84,7 +84,7 @@ namespace BlazorCRUD1.Concrete
         public Task<List<Product>> SimplyListFilterAll(string name, string origin, double lower, double upper)
         {
             var product = Task.FromResult(_dapperManager.GetAll<Product>
-                ($"SELECT * FROM [Product] WHERE ProductName like '%{name}%' AND ProductOrigin like '%{origin}%' AND ProductPrice > {lower} AND ProductPrice < {upper} AND DELETED = 'False';", null, commandType: CommandType.Text));
+                ($"SELECT P.ID, P.ProductName, P.ProductPrice, P.ProductOrigin, P.ProductDetails , ISNULL(sum(S.StockQty),0.0) As ProductTotalStock FROM [Product] as P Inner Join [Stock] as S on P.ID = S.ProductID WHERE P.ProductName like '%{name}%' AND P.ProductOrigin like '%{origin}%' AND P.ProductPrice > {lower} AND P.ProductPrice < {upper} AND P.DELETED = 'False' group by P.ID,P.ProductName, P.ProductOrigin, P.ProductPrice, P.ProductDetails;", null, commandType: CommandType.Text));
             return product;
 
         }

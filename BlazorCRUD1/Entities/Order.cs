@@ -16,5 +16,7 @@ namespace BlazorCRUD1.Entities
 
         public double OrderNetAmt { get; set; }
 
+        public double OrderDepositAmt { get; set; }
+
     }
 }

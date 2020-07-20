@@ -141,6 +141,9 @@
   <data name="edit" xml:space="preserve">
     <value>修改</value>
   </data>
+  <data name="editCustomer" xml:space="preserve">
+    <value>修改顧客資訊</value>
+  </data>
   <data name="next" xml:space="preserve">
     <value>下一頁</value>
   </data>
