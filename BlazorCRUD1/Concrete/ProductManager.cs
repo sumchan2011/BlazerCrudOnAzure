@@ -19,8 +19,14 @@ namespace BlazorCRUD1.Concrete
 
         public Task<int> Create(Product product)
         {
-            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Product](ProductName,ProductDetails,ProductOrigin,ProductPrice,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{product.ProductName}','{product.ProductDetails}','{product.ProductOrigin}','{product.ProductPrice}','{false}',CONVERT(datetime,'{product.UpdatedDateTime}',103),'{product.UpdatedBy}')", null,
+            var dictionary = new Dictionary<string, object>
+                {
+                    { "@UpdatedDateTime", 1 }
+                };
+            var parameters = new DynamicParameters(dictionary);
+            var productId = Task.FromResult(_dapperManager.Get<int>($"INSERT INTO [Product](ProductName,ProductDetails,ProductOrigin,ProductPrice,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{product.ProductName}','{product.ProductDetails}','{product.ProductOrigin}','{product.ProductPrice}','{false}',@UpdatedDateTime,'{product.UpdatedBy}')", parameters,
                     commandType: CommandType.Text));
+
             return productId;
         }
 
