@@ -1,7 +1,7 @@
 CREATE PROCEDURE [dbo].[ADD_ORDER]    
 	@CustomerID INT
 	@OrderTxnType INT
-	@OrderTotalAmt DECIMAL (20, 6)
+	@ DECIMAL (20, 6)
 	@OrderNetAmt DECIMAL (20, 6)
 	@OrderDepositAmt DECIMAL (20, 6)
 	@DELETED BIT
@@ -14,7 +14,7 @@ AS
         INSERT  INTO [Order]    
                 (CustomerID,
 				OrderTxnType,
-				OrderTotalAmt,
+				,
 				OrderNetAmt,
 				OrderDepositAmt,
 				DELETED,
@@ -23,7 +23,7 @@ AS
              )    
         VALUES  (@CustomerID,
 		         @OrderTxnType,
-		         @OrderTotalAmt,
+		         @,
                  @OrderNetAmt,
                  @OrderDepositAmt,
                  @DELETED,

@@ -8,7 +8,7 @@ namespace BlazorCRUD1.Entities
     {
         public Customer()
         {
-            this.CustomerPhone = 0;
+            this.CustomerPhone = 99999999;
             this.CustomerName = "Customer";
             this.CustomerCompany = "N/A";
             this.CustomerEmail = "N/A";

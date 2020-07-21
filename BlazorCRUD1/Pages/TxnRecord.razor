@@ -4,10 +4,10 @@
 @inject ICustomerManager customerManager
 @inject IOrderManager orderManager
 @inject IModalService Modal
-
+@inject IStringLocalizer<TxnRecord> localizer
 
 <div class="row col-md-3 pull-right">
-    <input type="text" id="txtSearch" placeholder="Search Customer" class="form-control" @bind="CustomerID" @bind:event="oninput" />
+    <input type="text" id="txtSearch" placeholder=@localizer["searchByPhone"] class="form-control" @bind="CustomerID" @bind:event="oninput" />
 </div>
 
 @if (IsShow)
@@ -15,116 +15,79 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th class="sort-th">
-                    Customer Name
-                    <span class="fa"></span>
-                </th>
-
-                <th class="sort-th">
-                    Customer Phone
-                    <span class="fa"></span>
-                </th>
-
-                <th class="sort-th">
-                    Customer Company
-                    <span class="fa"></span>
-                </th>
-                <th>Action</th>
+                <th class="sort-th">@localizer["customerName"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["customerPhone"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["customerCompany"]<span class="fa"></span></th>
+                <th class="sort-th">@localizer["customerEmail"]<span class="fa"></span></th>
+                <th>@localizer["action"]</th>
             </tr>
         </thead>
         <tbody>
             @if (customerModel == null || customerModel.Count == 0)
             {
-                <tr>
-                    <td colspan="4">
-                        No Customer found
-                    </td>
-                </tr>
+                <tr><td colspan="5">@localizer["noCustomer"]</td></tr>
             }
             else
             {
-
                 foreach (var customer in customerModel)
                 {
                     <tr>
                         <td>@customer.CustomerName</td>
                         <td>@customer.CustomerPhone</td>
                         <td>@customer.CustomerCompany</td>
-                        <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">SELECT</a>
+                        <td>@customer.CustomerEmail</td>
+                        <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">@localizer["select"]</a>
                     </tr>
                 }
             }
-
         </tbody>
     </table>
 }
 
 @if (customer != null)
 {
-    <h3>Customer: @customer.CustomerName</h3>
-    <h3>Phone: @customer.CustomerPhone</h3>
-    <h3>Company: @customer.CustomerCompany</h3>
+    <h4>@localizer["customerName"]: @customer.CustomerName</h4>
+    <h4>@localizer["customerPhone"]: @customer.CustomerPhone</h4>
+    <h4>@localizer["customerCompany"]: @customer.CustomerCompany</h4>
+    <h4>@localizer["customerEmail"]: @customer.CustomerEmail</h4>
 }
 
+<br />
+<h3>@localizer["orderDetails"]</h3>
+<br />
 
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th class="sort-th">
-                ID
-                <span class="fa"></span>
-            </th>
-            <th class="sort-th">
-                Txn Type
-                <span class="fa"></span>
-            </th>
-            <th class="sort-th">
-                Total Amt
-                <span class="fa"></span>
-            </th>
-            <th class="sort-th">
-                Net Amt
-                <span class="fa"></span>
-            </th>
-            <th class="sort-th">
-                Deposit Amt
-                <span class="fa"></span>
-            </th>
-            <th>Action</th>
+            <th class="sort-th">@localizer["orderID"]<span class="fa"></span></th>
+            <th class="sort-th">@localizer["orderType"]<span class="fa"></span></th>
+            <th class="sort-th">@localizer["totalAmount"]<span class="fa"></span></th>
+            <th class="sort-th">@localizer["depositeAmt"]<span class="fa"></span></th>
+            <th>@localizer["action"]</th>
         </tr>
     </thead>
     <tbody>
         @if (orderModel == null || orderModel.Count == 0)
         {
-            <tr>
-                <td colspan="6">
-                    No Order found
-                </td>
-            </tr>
+            <tr><td colspan="5">@localizer["noOrder"]</td></tr>
         }
         else
         {
-
             foreach (var order in orderModel)
             {
                 <tr data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(order.ID)">
                     <td>@order.ID</td>
                     <td>@order.OrderTxnType</td>
-                    <td>@order.OrderTotalTxn</td>
-                    <td>
-                        @order.OrderNetAmt
-                    </td>
-                    <td>@order.OrderDiscountAmt</td>
-                    <a class="btn btn-primary" @onclick="() => SelectCustomer(customer)">SELECT</a>
+                    <td>$@order.OrderTotalAmt</td>
+                    <td>$@order.OrderDepositAmt</td>
+                    <td></td>
                 </tr>
                 @if (saleTxnModel == null || saleTxnModel.Count == 0)
                 {
                     if (order.ID == selectedindex)
                     {
                         <tr data-toggle="collapse" class="@NavMenuCssClass">
-                            <td colspan="6">
-                                No Item to display
-                            </td>
+                            <td colspan="6">@localizer["noItem"]</td>
                         </tr>
                     }
                 }
@@ -133,50 +96,22 @@
                     if (order.ID == saleTxnModel[0].SaleTxnOrderID)
                     {
                         <tr data-toggle="collapse" class="@NavMenuCssClass">
-                            <th class="sort-th">
-                                ID
-                                <span class="fa "></span>
-                            </th>
-                            <th class="sort-th">
-                                Product Name
-                                <span class="fa "></span>
-                            </th>
-
-                            <th class="sort-th">
-                                Product Origin
-                                <span class="fa"></span>
-                            </th>
-
-                            <th class="sort-th">
-                                QTY
-                                <span class="fa"></span>
-                            </th>
-
-                            <th class="sort-th">
-                                Unit Price
-                                <span class="fa "></span>
-                            </th>
-
-                            <th class="sort-th">
-                                Sub Total
-                                <span class="fa "></span>
-                            </th>
-
-                            <th class="sort-th">
-                                Status
-                                <span class="fa"></span>
-                            </th>
+                            <th class="sort-th">@localizer["productName"]<span class="fa "></span></th>
+                            <th class="sort-th">@localizer["productOrigin"]<span class="fa"></span></th>
+                            <th class="sort-th">@localizer["qty"]<span class="fa"></span></th>
+                            <th class="sort-th">@localizer["productPrice"]<span class="fa "></span></th>
+                            <th class="sort-th">@localizer["subTotal"]<span class="fa "></span></th>
+                            <th class="sort-th">@localizer["status"]<span class="fa"></span></th>
                         </tr>
 
                         foreach (var item in saleTxnModel)
                         {
                             <tr data-toggle="collapse" class="@NavMenuCssClass">
-                                <td>@item.SaleProduct.ID</td>
                                 <td>@item.SaleProduct.ProductName</td>
                                 <td>@item.SaleProduct.ProductOrigin</td>
-                                <td>@item.SaleQty/></td>
-                                <td>@item.SaleProduct.ProductPrice</td>
-                                <td>@item.CalculateSubTotal()</td>
+                                <td>@item.SaleTxnQty</td>
+                                <td>$@item.SaleProduct.ProductPrice</td>
+                                <td>$@item.CalculateSubTotal()</td>
                                 <td>@item.SaleStatus</td>
                             </tr>
                         }
@@ -195,7 +130,7 @@
 
     List<SaleTxn> saleTxnModel;
     List<Customer> customerModel;
-    Customer customer = new Customer();
+    Customer customer;
 
     Order orderEntity = new Order();
     List<Order> orderModel;
@@ -245,47 +180,13 @@
 
     protected async Task SelectCustomer(Customer cust)
     {
-        IsShow2 = false;
+        CustomerID = null;
+        IsShow = false;
         customer = cust;
         if (orderModel == null)
             orderModel = new List<Order>();
 
         orderModel = await orderManager.SimplyListAll(customer.ID);
-    }
-
-    public async void ConfirmTransaction(Order order)
-    {
-
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(order), order);
-
-        var formModal = Modal.Show<ConfirmTxn>("Confirm Txn", parameters);
-        var result = await formModal.Result;
-
-        if (result.Cancelled)
-        {
-            //Console.WriteLine("Modal was cancelled");
-        }
-        else
-        {
-            Order Temp = (Order)result.Data;
-
-            orderEntity.UpdatedBy = "SAM";
-            orderEntity.UpdatedDateTime = DateTime.Now;
-
-            if (orderEntity.OrderCustomer == null)
-                orderEntity.OrderCustomer = new Customer();
-
-            int order_id = await orderManager.Create(orderEntity);
-
-            foreach (SaleTxn item in saleTxnModel)
-            {
-                item.SaleTxnOrderID = order_id;
-                item.UpdatedBy = "SAM";
-                item.UpdatedDateTime = DateTime.Now;
-                await saleManager.Create(item);
-            }
-        }
     }
 
     public async void ToggleTableTr(int orderID)
@@ -294,7 +195,7 @@
         collapseNavMenu = !collapseNavMenu;
         saleTxnModel = await saleManager.SimplyListAll(orderID);
         IsShow2 = !IsShow2;
-        foreach(SaleTxn item in saleTxnModel)
+        foreach (SaleTxn item in saleTxnModel)
         {
             item.SaleProduct = await productManager.GetById(item.SaleTxnProductID);
         }

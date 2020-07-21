@@ -13,7 +13,7 @@ namespace BlazorCRUD1.Entities
 
         public int SaleStatus { get; set; }
 
-        public double SaleQty{ get; set; }
+        public double SaleTxnQty{ get; set; }
 
         public double SaleSubTotal { get; set; } = 0.0;
 
@@ -25,13 +25,13 @@ namespace BlazorCRUD1.Entities
 
         public double CalculateSubTotal()
         {
-            this.SaleSubTotal = this.SaleQty * this.SaleProduct.ProductPrice;
+            this.SaleSubTotal = this.SaleTxnQty * this.SaleProduct.ProductPrice;
             return this.SaleSubTotal;
         }
 
         public void checkQtyToSale()
         {
-            if (SaleQty > 100)
+            if (SaleTxnQty > 100)
                 SaleStatus = 1;
             else
                 SaleStatus = 0;

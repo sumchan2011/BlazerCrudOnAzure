@@ -12,7 +12,7 @@ namespace BlazorCRUD1.Models
         public Customer OrderCustomer { get;set; }
 
         //System calculate amount
-        public double OrderTotalTxn { get; set; }
+        public double OrderTotalAmt { get; set; }
 
         //Customer total should amount
         public double OrderNetAmt { get; set; }

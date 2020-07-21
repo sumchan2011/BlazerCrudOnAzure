@@ -3,7 +3,7 @@
 @inject IStringLocalizer<ConfirmTxn> localizer
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
-<h3>@localizer["totalAmount"]: $@order.OrderTotalTxn</h3>
+<h3>@localizer["totalAmount"]: $@order.OrderTotalAmt</h3>
 
 @if (order.OrderDiscountAmt != 0)
 {

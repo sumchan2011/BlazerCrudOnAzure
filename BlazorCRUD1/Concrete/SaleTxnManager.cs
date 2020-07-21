@@ -21,7 +21,7 @@ namespace BlazorCRUD1.Concrete
             var dbPara = new DynamicParameters();
 
             var articleId = Task.FromResult(_dapperManager.Get<int>(
-                $"INSERT INTO [SaleTxn](SaleTxnStatus, SaleTxnQty, SaleTxnSubTotal, SaleReceivedQty, SaleTxnProductID, SaleTxnOrderID ,DELETED, UpdatedDateTime, UpdatedBy) OUTPUT Inserted.ID VALUES('{saleTxn.SaleStatus}','{saleTxn.SaleQty}','{saleTxn.SaleSubTotal}', '{saleTxn.SaleReceivedQty}','{saleTxn.SaleProduct.ID}','{saleTxn.SaleTxnOrderID}' ,'{false}', CONVERT(datetime,'{saleTxn.UpdatedDateTime}',103), '{saleTxn.UpdatedBy}')",
+                $"INSERT INTO [SaleTxn](SaleTxnStatus, SaleTxnQty, SaleTxnSubTotal, SaleReceivedQty, SaleTxnProductID, SaleTxnOrderID ,DELETED, UpdatedDateTime, UpdatedBy) OUTPUT Inserted.ID VALUES('{saleTxn.SaleStatus}','{saleTxn.SaleTxnQty}','{saleTxn.SaleSubTotal}', '{saleTxn.SaleReceivedQty}','{saleTxn.SaleProduct.ID}','{saleTxn.SaleTxnOrderID}' ,'{false}', CONVERT(datetime,'{saleTxn.UpdatedDateTime}',103), '{saleTxn.UpdatedBy}')",
                             null,
                             commandType: CommandType.Text));
             return articleId;

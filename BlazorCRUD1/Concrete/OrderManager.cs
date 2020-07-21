@@ -21,14 +21,14 @@ namespace BlazorCRUD1.Concrete
             var dbPara = new DynamicParameters(); 
             dbPara.Add("CustomerID", order.OrderCustomer.ID, DbType.Int32);
             dbPara.Add("OrderTxnType", order.OrderTxnType, DbType.Int32);
-            dbPara.Add("OrderTotalAmt", order.OrderTotalTxn, DbType.Double);
+            dbPara.Add("", order.OrderTotalAmt, DbType.Double);
             dbPara.Add("OrderNetAmt", order.OrderNetAmt, DbType.Double);
             dbPara.Add("OrderDepositAmt", order.OrderDiscountAmt, DbType.Double);
             dbPara.Add("DELETED", false, DbType.Boolean);
             dbPara.Add("UpdatedDateTime", order.UpdatedDateTime, DbType.DateTime);
             dbPara.Add("UpdatedBy", order.UpdatedBy, DbType.String);
             var articleId = Task.FromResult(_dapperManager.Insert<int>(
-                $"INSERT INTO [Order](CustomerID,OrderTxnType,OrderTotalAmt,OrderNetAmt,OrderDepositAmt,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{order.OrderCustomer.ID}','{order.OrderTxnType}','{order.OrderTotalTxn}','{order.OrderNetAmt}','{order.OrderDiscountAmt}','{false}',CONVERT(datetime,'{order.UpdatedDateTime}',103),'{order.UpdatedBy}')",
+                $"INSERT INTO [Order](CustomerID,OrderTxnType,,OrderNetAmt,OrderDepositAmt,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{order.OrderCustomer.ID}','{order.OrderTxnType}','{order.OrderTotalAmt}','{order.OrderNetAmt}','{order.OrderDiscountAmt}','{false}',CONVERT(datetime,'{order.UpdatedDateTime}',103),'{order.UpdatedBy}')",
                             dbPara,
                             commandType: CommandType.Text));
             return articleId;

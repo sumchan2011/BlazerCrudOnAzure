@@ -10,7 +10,7 @@ namespace BlazorCRUD1.Entities
 
         public Customer OrderCustomer { get; set; }
 
-        public double OrderTotalTxn { get; set; }
+        public double OrderTotalAmt { get; set; }
 
         public double OrderDiscountAmt { get; set; }
 
