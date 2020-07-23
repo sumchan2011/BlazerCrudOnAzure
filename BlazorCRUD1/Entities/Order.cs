@@ -18,5 +18,10 @@ namespace BlazorCRUD1.Entities
 
         public double OrderDepositAmt { get; set; }
 
+        public double calculateRemainPayAmount()
+        {
+            return OrderTotalAmt - OrderDepositAmt;
+        }
+
     }
 }

@@ -28,7 +28,7 @@ namespace BlazorCRUD1.Concrete
             dbPara.Add("UpdatedDateTime", order.UpdatedDateTime, DbType.DateTime);
             dbPara.Add("UpdatedBy", order.UpdatedBy, DbType.String);
             var articleId = Task.FromResult(_dapperManager.Insert<int>(
-                $"INSERT INTO [Order](CustomerID,OrderTxnType,,OrderNetAmt,OrderDepositAmt,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{order.OrderCustomer.ID}','{order.OrderTxnType}','{order.OrderTotalAmt}','{order.OrderNetAmt}','{order.OrderDiscountAmt}','{false}',CONVERT(datetime,'{order.UpdatedDateTime}',103),'{order.UpdatedBy}')",
+                $"INSERT INTO [Order](CustomerID,OrderTxnType,OrderTotalAmt,OrderNetAmt,OrderDepositAmt,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{order.OrderCustomer.ID}','{order.OrderTxnType}','{order.OrderTotalAmt}','{order.OrderNetAmt}','{order.OrderDiscountAmt}','{false}',CONVERT(datetime,'{order.UpdatedDateTime}',103),'{order.UpdatedBy}')",
                             dbPara,
                             commandType: CommandType.Text));
             return articleId;
@@ -82,6 +82,13 @@ namespace BlazorCRUD1.Concrete
         {
             var stock = Task.FromResult(_dapperManager.GetAll<Order>
                 ($"SELECT * FROM [Order] WHERE CustomerID = {customerID};", null, commandType: CommandType.Text));
+            return stock;
+        }
+
+        public Task<List<Order>> SimplyListAll()
+        {
+            var stock = Task.FromResult(_dapperManager.GetAll<Order>
+                ($"SELECT * FROM [Order];", null, commandType: CommandType.Text));
             return stock;
         }
     }

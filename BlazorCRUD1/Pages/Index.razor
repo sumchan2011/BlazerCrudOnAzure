@@ -169,20 +169,20 @@
                     </td>
                     <td>$@saleItem.SaleProduct.ProductPrice</td>
                     <td>$@saleItem.CalculateSubTotal()</td>
-                    <!--<td>@saleItem.SaleStatus</td>-->
+                    <!--<td>@saleItem.SaleTxnStatus</td>-->
                     <td>
-                        <select @bind="saleItem.SaleStatus">
+                        <select @bind="saleItem.SaleTxnStatus">
                             <option value="0">@localizer["allDelivery"]</option>
                             <option value="1">
                                 @localizer["partialDelivery"]
                             </option>
                             <option value="2">@localizer["noDelivery"]</option>
                         </select>
-                        @if (saleItem.SaleStatus == 1)
+                        @if (saleItem.SaleTxnStatus == 1)
                         {
                             <input type="number" step="0.01" class="form-control" @bind-value:event="oninput" @bind-value="@saleItem.SaleReceivedQty" />
                         }
-                        else if (saleItem.SaleStatus == 0)
+                        else if (saleItem.SaleTxnStatus == 0)
                         {
                             saleItem.SaleReceivedQty = saleItem.SaleTxnQty;
                         }
@@ -343,7 +343,7 @@ else
     {
         SaleTxn saleItem = new SaleTxn();
         saleItem.SaleProduct = product;
-        saleItem.SaleStatus = 0;
+        saleItem.SaleTxnStatus = 0;
         saleItem.SaleTxnQty = 1.0;
         saleItem.SaleSubTotal = saleItem.SaleTxnQty * saleItem.SaleProduct.ProductPrice;
         saleItem.UpdatedBy = "SAM";
