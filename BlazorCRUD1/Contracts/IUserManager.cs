@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace BlazorCRUD1.Contracts
 {
-    public interface ICustomerManager
+    public interface IUserManager
     {
-        Task<int> Create(Customer customer);
-        Task<int> Delete(int Id);
-        Task<int> Count(string search);
-        Task<int> Update(Customer customer);
-        Task<Customer> GetById(int Id);
-        Task<List<Customer>> ListAll(string customerPhone);
-        Task<List<Customer>> ListAll(int skip, int take, string orderBy, string direction, string customerPhone);
+        Task<int> Create(User user);
+        Task<int> Update(User user);
+        bool Verify(User user);
+        Task<int> Login(User user);
+
+        //Task<int> GetLoginToken(User user);
+        //Task<int> Count();
     }
 }

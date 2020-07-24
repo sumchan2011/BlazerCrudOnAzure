@@ -41,6 +41,8 @@ namespace BlazorCRUD1
             services.AddScoped<ISaleTxnManager, SaleTxnManager>();
             services.AddScoped<IOrderManager, OrderManager>();
             services.AddScoped<IStoreManager, StoreManager>();
+            services.AddScoped<IUserManager, UserManager>();
+
             //Register dapper in scope  
             services.AddScoped<IDapperManager, DapperManager>();
             services.AddBlazoredModal();

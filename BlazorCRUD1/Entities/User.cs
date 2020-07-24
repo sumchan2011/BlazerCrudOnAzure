@@ -4,23 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazorCRUD1.Entities
 {
-    public class Customer : Base
+    public class User : Base
     {
-        public Customer()
+        public User()
         {
-            this.CustomerPhone = 99999999;
-            this.CustomerName = "Customer";
-            this.CustomerCompany = "N/A";
-            this.CustomerEmail = "N/A";
         }
 
-        public int CustomerPhone { get; set; }
-
-        public String CustomerName { get; set; }
-
-        public String CustomerCompany { get; set; }
-
-        public String CustomerEmail { get; set; }
+        public String UserName { get; set; }
+        public String PasswordHash { get; set; }
 
     }
 }

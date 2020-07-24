@@ -7,62 +7,39 @@ using System.Threading.Tasks;
 
 namespace BlazorCRUD1.Concrete
 {
-    public class OrderManager : IOrderManager
+    public class UserManager : IUserManager
     {
         private readonly IDapperManager _dapperManager;
 
-        public OrderManager(IDapperManager dapperManager)
+        public UserManager(IDapperManager dapperManager)
         {
             this._dapperManager = dapperManager;
         }
 
-        public Task<int> Create(Order order)
-        {
-            var dbPara = new DynamicParameters(); 
-            dbPara.Add("CustomerID", order.OrderCustomer.ID, DbType.Int32);
-            dbPara.Add("OrderTxnType", order.OrderTxnType, DbType.Int32);
-            dbPara.Add("", order.OrderTotalAmt, DbType.Double);
-            dbPara.Add("OrderNetAmt", order.OrderNetAmt, DbType.Double);
-            dbPara.Add("OrderDepositAmt", order.OrderDiscountAmt, DbType.Double);
-            dbPara.Add("DELETED", false, DbType.Boolean);
-            dbPara.Add("UpdatedDateTime", order.UpdatedDateTime, DbType.DateTime);
-            dbPara.Add("UpdatedBy", order.UpdatedBy, DbType.String);
-            var articleId = Task.FromResult(_dapperManager.Insert<int>(
-                $"INSERT INTO [Order](CustomerID,OrderTxnType,,OrderNetAmt,OrderDepositAmt,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES('{order.OrderCustomer.ID}','{order.OrderTxnType}','{order.OrderTotalAmt}','{order.OrderNetAmt}','{order.OrderDiscountAmt}','{false}',CONVERT(datetime,'{order.UpdatedDateTime}',103),'{order.UpdatedBy}')",
-                            dbPara,
-                            commandType: CommandType.Text));
-            return articleId;
+        public Task<int> Create(User user) {
+            var dbPara = new DynamicParameters();
+            //dbPara.Add("UserName", user.UserName, DbType.String);
+            //dbPara.Add("PasswordHash", user.PasswordHash, DbType.String);
+            //dbPara.Add("DELETED", false, DbType.Boolean);
+            //dbPara.Add("UpdatedDateTime", user.UpdatedDateTime, DbType.DateTime);
+            //dbPara.Add("UpdatedBy", user.UpdatedBy, DbType.String);
+
+            dbPara.Add("@UserName", user.UserName, DbType.String);
+            dbPara.Add("@PasswordHash", user.PasswordHash, DbType.String);
+            dbPara.Add("@DELETED", false, DbType.Boolean);
+            dbPara.Add("@UpdatedDateTime", user.UpdatedDateTime, DbType.DateTime);
+            dbPara.Add("@UpdatedBy", user.UpdatedBy, DbType.String);
+
+            //{ "@UpdatedDateTime", 1 }
+
+            var userId = Task.FromResult(_dapperManager.Insert<int>(
+            $"INSERT INTO [User](UserName,Password,DELETED,UpdatedDateTime,UpdatedBy) OUTPUT Inserted.ID VALUES(@UserName,@PasswordHash,@DELETED,@UpdatedDateTime,@UpdatedBy)",
+                dbPara,
+                commandType: CommandType.Text));
+            return userId;
         }
 
-        public Task<Order> GetById(int id)
-        {
-            var stock = Task.FromResult(_dapperManager.Get<Order>($"select * from [Order] where ID = {id}", null,
-                    commandType: CommandType.Text));
-            return stock;
-        }
-
-        public Task<int> Delete(int id)
-        {
-            var deleteArticle = Task.FromResult(_dapperManager.Execute($"Delete [Order] where ID = {id}", null,
-                    commandType: CommandType.Text));
-            return deleteArticle;
-        }
-
-        public Task<int> Count(string search)
-        {
-            var totArticle = Task.FromResult(_dapperManager.Get<int>($"select COUNT(*) from [Order] WHERE ProductName like '%{search}%'", null,
-                    commandType: CommandType.Text));
-            return totArticle;
-        }
-
-        public Task<List<Order>> ListAll(int skip, int take, string orderBy, int productID, string direction = "DESC")
-        {
-            var stock = Task.FromResult(_dapperManager.GetAll<Order>
-                ($"SELECT * FROM [Order] WHERE ProductID like '{productID}%' ORDER BY {orderBy} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY; ", null, commandType: CommandType.Text));
-            return stock;
-        }
-
-        public Task<int> Update(Order order)
+        public Task<int> Update(User user)
         {
             var dbPara = new DynamicParameters();
             /*dbPara.Add("ProductID", order.ProductID, DbType.Int32);
@@ -78,11 +55,34 @@ namespace BlazorCRUD1.Concrete
             return updateArticle;
         }
 
-        public Task<List<Order>> SimplyListAll(int customerID)
+        //public Task<int> GetLoginToken(User user)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
+
+        public bool Verify(User user) {
+
+            var dbPara = new DynamicParameters();
+            //TODO: encrypt password
+            dbPara.Add("@UserName", user.UserName, DbType.String);
+            dbPara.Add("@PasswordHash", user.PasswordHash, DbType.String);
+
+            var verified = Task.FromResult(_dapperManager.Get<int>
+            ($"SELECT ID FROM [AuthUsers] WHERE UserName = @UserName and PasswordHash = @PasswordHash;", dbPara, commandType: CommandType.Text));
+            return (verified != null?true:false);
+        }
+
+
+        public Task<int> Login(User user)
         {
-            var stock = Task.FromResult(_dapperManager.GetAll<Order>
-                ($"SELECT * FROM [Order] WHERE CustomerID = {customerID};", null, commandType: CommandType.Text));
-            return stock;
+            var dbPara = new DynamicParameters();
+            //TODO: encrypt password
+            dbPara.Add("@UserName", user.UserName, DbType.String);
+            dbPara.Add("@PasswordHash", user.PasswordHash, DbType.String);
+
+            var userId = Task.FromResult(_dapperManager.Get<int>
+            ($"SELECT ID FROM [AuthUsers] WHERE UserName = @UserName and PasswordHash = @PasswordHash;", dbPara, commandType: CommandType.Text));
+            return userId;
         }
     }
 }
