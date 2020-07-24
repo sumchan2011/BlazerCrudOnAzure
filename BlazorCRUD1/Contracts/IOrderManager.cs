@@ -13,5 +13,6 @@ namespace BlazorCRUD1.Contracts
         Task<Order> GetById(int Id);
         Task<List<Order>> ListAll(int skip, int take, string orderBy, int productID, string direction);
         Task<List<Order>> SimplyListAll(int customterID);
+        Task<List<Order>> SimplyListAll();
     }
 }

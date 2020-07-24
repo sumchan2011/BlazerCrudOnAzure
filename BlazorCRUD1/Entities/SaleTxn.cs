@@ -11,7 +11,7 @@ namespace BlazorCRUD1.Entities
 
         public int SaleTxnProductID { get; set; }
 
-        public int SaleStatus { get; set; }
+        public int SaleTxnStatus { get; set; }
 
         public double SaleTxnQty{ get; set; }
 
@@ -32,9 +32,9 @@ namespace BlazorCRUD1.Entities
         public void checkQtyToSale()
         {
             if (SaleTxnQty > 100)
-                SaleStatus = 1;
+                SaleTxnStatus = 1;
             else
-                SaleStatus = 0;
+                SaleTxnStatus = 0;
         }
 
     }

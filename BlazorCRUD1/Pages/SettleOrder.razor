@@ -1,0 +1,42 @@
+﻿@page "/settleOrder"
+@inject IProductManager productManager
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IStringLocalizer<SettleOrder> localizer
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+
+                <label for="Name" class="control-label">@localizer["totalAmount"]</label>
+                <label for="Name" class="control-label">$@order.OrderTotalAmt</label>
+
+                <label for="Name" class="control-label">@localizer["depositeAmt"]</label>
+                <label for="Name" class="control-label">$@order.OrderDepositAmt</label>
+
+                <label for="number" class="control-label">@localizer["remainAmt"]</label>
+                <input type="number" step="0.01" max="@order.calculateRemainPayAmount()">
+
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="@localizer["confirm"]" @onclick="() => ConfirmedUpdate()">
+                <button type="button" class="btn btn-danger" @onclick="() => Cancel()">@localizer["cancel"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [Parameter] public Order order { get; set; }
+
+    protected async Task ConfirmedUpdate()
+    {
+        //BlazoredModal.Close(ModalResult.Ok(order));
+    }
+
+    protected async Task Cancel()
+    {
+        BlazoredModal.Cancel();
+    }
+}

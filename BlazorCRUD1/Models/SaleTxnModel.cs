@@ -10,7 +10,7 @@ namespace BlazorCRUD1.Models
 
         public Product SaleProduct { get; set; }
 
-        public int SaleStatus { get; set; }
+        public int SaleTxnStatus { get; set; }
 
         public double SaleTxnQty { get; set; }
 

@@ -258,6 +258,9 @@
   <data name="depositeAmt" xml:space="preserve">
     <value>Deposite</value>
   </data>
+  <data name="itemDelivery" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
   <data name="noItem" xml:space="preserve">
     <value>No Order Item</value>
   </data>
@@ -266,5 +269,11 @@
   </data>
   <data name="orderType" xml:space="preserve">
     <value>Order Type</value>
+  </data>
+  <data name="settled" xml:space="preserve">
+    <value>Order Settled</value>
+  </data>
+  <data name="settleOrder" xml:space="preserve">
+    <value>Settle Order</value>
   </data>
 </root>

@@ -80,7 +80,15 @@
                     <td>@order.OrderTxnType</td>
                     <td>$@order.OrderTotalAmt</td>
                     <td>$@order.OrderDepositAmt</td>
-                    <td></td>
+                    @if (order.OrderTotalAmt == order.OrderDepositAmt)
+                    {
+                        <td>@localizer["settled"]</td>
+                    }
+                    else
+                    {
+                        <td class="btn btn-primary" @onclick="()=>SettleOrderDialog(order)">@localizer["settleOrder"]</td>
+                    }
+
                 </tr>
                 @if (saleTxnModel == null || saleTxnModel.Count == 0)
                 {
@@ -102,6 +110,7 @@
                             <th class="sort-th">@localizer["productPrice"]<span class="fa "></span></th>
                             <th class="sort-th">@localizer["subTotal"]<span class="fa "></span></th>
                             <th class="sort-th">@localizer["status"]<span class="fa"></span></th>
+                            <th>@localizer["action"]</th>
                         </tr>
 
                         foreach (var item in saleTxnModel)
@@ -112,7 +121,21 @@
                                 <td>@item.SaleTxnQty</td>
                                 <td>$@item.SaleProduct.ProductPrice</td>
                                 <td>$@item.CalculateSubTotal()</td>
-                                <td>@item.SaleStatus</td>
+                                <td>@displayItemStatus(item.SaleTxnStatus)</td>
+                                @switch (item.SaleTxnStatus)
+                                {
+                                    case 0:
+                                        //display a line
+                                        <td></td>
+                                        break;
+                                    case 1:
+                                    case 2:
+                                        <td class="btn btn-primary" @onclick="()=>DeliverySaleItemDialog(item)">@localizer["itemDelivery"]</td>
+                                        break;
+                                    default:
+                                        <td></td>
+                                        break;
+                                }
                             </tr>
                         }
                     }
@@ -170,6 +193,15 @@
         this.IsShow2 = false;
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        //display total page buttons
+        if (orderModel == null)
+            orderModel = new List<Order>();
+
+        orderModel = await orderManager.SimplyListAll();
+    }
+
 
     protected async Task FilterCustomer(String customerId)
     {
@@ -183,9 +215,8 @@
         CustomerID = null;
         IsShow = false;
         customer = cust;
-        if (orderModel == null)
-            orderModel = new List<Order>();
-
+        saleTxnModel = null;
+        orderModel = new List<Order>();
         orderModel = await orderManager.SimplyListAll(customer.ID);
     }
 
@@ -199,7 +230,54 @@
         {
             item.SaleProduct = await productManager.GetById(item.SaleTxnProductID);
         }
+    }
 
+    private string displayItemStatus(int status)
+    {
+        switch (status)
+        {
+            case 0:
+                return localizer["allDelivery"];
+            case 1:
+                return localizer["partialDelivery"];
+            case 2:
+                return localizer["noDelivery"];
+            default:
+                return localizer["noDelivery"];
+        }
+    }
 
+    public async void SettleOrderDialog(Order order)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(order), order);
+
+        var formModal = Modal.Show<SettleOrder>(localizer["settleOrder"],parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+        }
+    }
+
+    public async void DeliverySaleItemDialog(SaleTxn item)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(item), item);
+
+        var formModal = Modal.Show<DeliveryItem>(localizer["itemDelivery"],parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            //Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+        }
     }
 }
