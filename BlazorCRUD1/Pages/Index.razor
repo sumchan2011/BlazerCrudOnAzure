@@ -10,29 +10,44 @@
 @inject IUserManager userManager
 
 <p>Login Page </p>
-<form id="list-table-search-form" class="search-form" action="/receipt/export" method="post">
-    <div class="form-group">
-        <label for="userName">@localizer["userName"]</label>
-        <input id="userName" name="userName" type="text" @bind="u.UserName" @bind:event="oninput" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="password">@localizer["password"]</label>
-        <input id="password" name="password" type="text" @bind="u.PasswordHash" @bind:event="oninput" class="form-control">
-    </div>
+@if (auth)
+{
+    <p>@welcomeMessage</p>
+}
+@if (!auth)
+{
+    <form id="list-table-search-form" class="search-form" action="" method="post">
+        <div class="form-group">
+            <label for="userName">@localizer["userName"]</label>
+            <input id="userName" name="userName" type="text" @bind="u.UserName" @bind:event="oninput" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="password">@localizer["password"]</label>
+            <input id="password" name="password" type="text" @bind="u.PasswordHash" @bind:event="oninput" class="form-control">
+        </div>
 
-    <div class="form-group">
-        <button type="button" class="btn btn-primary" @onclick="() => login()">Login</button>
-    </div>
-</form>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" @onclick="() => login()">Login</button>
+        </div>
+    </form>}
+
 
 @code {
+    bool auth = false;
+    String welcomeMessage = "";
+    int userId = 10;
+
     User u = new User();
 
-    void login()
+    async void login()
     {
-        userManager.Login(u);
-
+        userId = await userManager.Login(u);
+        auth = true;
+        welcomeMessage = "Welcome " + userId;
+        StateHasChanged();
     }
+
+
 
     //protected async Task CreateArticle()
     //{
