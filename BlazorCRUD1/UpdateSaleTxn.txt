@@ -1,0 +1,25 @@
+CREATE PROCEDURE [dbo].[SP_Update_SaleTxn] 
+		@ID 				INT,   
+		@SaleTxnStatus 		INT,
+		@SaleTxnProductID	INT,
+		@SaleTxnQty			DECIMAL (20, 6),
+		@SaleTxnSubTotal	DECIMAL (20, 6),
+		@SaleReceivedQty	DECIMAL (20, 6),
+		@DELETED			BIT,
+		@UpdatedDateTime	DATETIME,
+		@UpdatedBy			NVARCHAR (255)
+	AS    
+		BEGIN    
+
+		UPDATE [SaleTxn] SET
+			SaleTxnStatus 		= @SaleTxnStatus, 		
+			SaleTxnProductID	= @SaleTxnProductID,	
+			SaleTxnQty			= @SaleTxnQty,			
+			SaleTxnSubTotal		= @SaleTxnSubTotal,		
+			SaleReceivedQty		= @SaleReceivedQty,		
+			DELETED				= @DELETED,				
+			UpdatedDateTime		= @UpdatedDateTime,		
+			UpdatedBy			= @UpdatedBy			
+		WHERE ID = @ID 
+	           
+		END;

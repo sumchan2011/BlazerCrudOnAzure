@@ -129,6 +129,10 @@
     <h4>@localizer["customerPhone"]: @orderEntity.OrderCustomer.CustomerPhone</h4>
     <h4>@localizer["customerCompany"]: @orderEntity.OrderCustomer.CustomerCompany</h4>
     <h4>@localizer["customerEmail"]: @orderEntity.OrderCustomer.CustomerEmail</h4>
+    <br />
+    <a class="btn btn-wide btn-outline-secondary" @onclick="() => ClearCustomer()">@localizer["clear"]</a>
+    <br /><br />
+
 }
 
 <h3>@localizer["orderDetails"]</h3>
@@ -328,6 +332,13 @@ else
             origin = "";
 
         productModel = await productManager.SimplyListFilterAll(name, origin, Double.Parse(lowerAmt), Double.Parse(upperAmt));
+    }
+
+    private void ClearCustomer()
+    {
+        searchTerm = null;
+        orderEntity.OrderCustomer = null;
+        StateHasChanged();
     }
 
     protected void FilterClear()

@@ -65,16 +65,20 @@ namespace BlazorCRUD1.Concrete
         public Task<int> Update(Order order)
         {
             var dbPara = new DynamicParameters();
-            /*dbPara.Add("ProductID", order.ProductID, DbType.Int32);
-            dbPara.Add("StockCost", order.StockCost, DbType.Double);
-            dbPara.Add("StockQty", order.StockQty, DbType.Double);
-            dbPara.Add("StockDate", order.StockDate, DbType.DateTime);
-            dbPara.Add("LastUpdateDate", order.LastUpdateDate, DbType.DateTime);
-            dbPara.Add("LastUpdateUser", order.LastUpdateUser, DbType.String);
-            */
-            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Article]",
+
+            dbPara.Add("ID", order.ID, DbType.Int32);
+            dbPara.Add("CustomerID", order.OrderCustomer.ID, DbType.Int32);
+            dbPara.Add("OrderTxnType", order.OrderTxnType, DbType.Int32);
+            dbPara.Add("OrderTotalAmt", order.OrderTotalAmt, DbType.Double);
+            dbPara.Add("OrderNetAmt", order.OrderNetAmt, DbType.Double);
+            dbPara.Add("OrderDepositAmt", order.OrderDepositAmt, DbType.Double);
+            dbPara.Add("DELETED", false, DbType.Boolean);
+            dbPara.Add("UpdatedDateTime", System.DateTime.Now, DbType.DateTime);
+            dbPara.Add("UpdatedBy", "abc", DbType.String);
+            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Order]",
                             dbPara,
                             commandType: CommandType.StoredProcedure));
+
             return updateArticle;
         }
 

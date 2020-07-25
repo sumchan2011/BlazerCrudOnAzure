@@ -8,6 +8,8 @@ namespace BlazorCRUD1.Entities
     {
         public int OrderTxnType { get; set; }
 
+        public int CustomerID { get; set; }
+
         public Customer OrderCustomer { get; set; }
 
         public double OrderTotalAmt { get; set; }

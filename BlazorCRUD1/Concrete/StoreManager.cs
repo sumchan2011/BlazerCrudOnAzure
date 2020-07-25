@@ -31,6 +31,8 @@ namespace BlazorCRUD1.Concrete
             dbPara.Add("ID", store.ID, DbType.Int32);
             dbPara.Add("StoreName", store.StoreName, DbType.String);
             dbPara.Add("StoreAddress", store.StoreAddress, DbType.String);
+            dbPara.Add("StoreAddress2", store.StoreAddress2, DbType.String);
+            dbPara.Add("StoreAddress3", store.StoreAddress3, DbType.String);
             dbPara.Add("StoreLocalPhone", store.StoreLocalPhone, DbType.String);
             dbPara.Add("StoreMobilePhone", store.StoreMobilePhone, DbType.String);
             dbPara.Add("StoreFax", store.StoreFax, DbType.String);
@@ -40,9 +42,7 @@ namespace BlazorCRUD1.Concrete
             dbPara.Add("StoreEmail", store.StoreEmail, DbType.String);
             dbPara.Add("StoreUnit", store.StoreUnit, DbType.Int32);
             dbPara.Add("StoreItemPerPage", store.StoreItemPerPage, DbType.Int32);
-            dbPara.Add("UpdatedDateTime", System.DateTime.Now, DbType.DateTime);
-            dbPara.Add("UpdatedBy", "abc", DbType.String);
-            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Product_2]",
+            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Store2]",
                             dbPara,
                             commandType: CommandType.StoredProcedure));
             return updateArticle;

@@ -120,6 +120,9 @@
   <data name="back" xml:space="preserve">
     <value>返回</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
   <data name="confirm" xml:space="preserve">
     <value>確認</value>
   </data>

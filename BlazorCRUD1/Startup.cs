@@ -14,6 +14,7 @@ using BlazorCRUD1.Contracts;
 using BlazorCRUD1.Concrete;
 using Blazored.Modal;
 using System.Globalization;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace BlazorCRUD1
 {
@@ -44,6 +45,7 @@ namespace BlazorCRUD1
             //Register dapper in scope  
             services.AddScoped<IDapperManager, DapperManager>();
             services.AddBlazoredModal();
+            services.AddHeadElementHelper();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             var supportedCultures = new List<CultureInfo> {  new CultureInfo("zh-hk"), new CultureInfo("en") };

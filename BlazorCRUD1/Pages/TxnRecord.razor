@@ -4,6 +4,7 @@
 @inject ICustomerManager customerManager
 @inject IOrderManager orderManager
 @inject IModalService Modal
+@inject IStoreManager storeManager
 @inject IStringLocalizer<TxnRecord> localizer
 
 <div class="row col-md-3 pull-right">
@@ -50,6 +51,9 @@
     <h4>@localizer["customerPhone"]: @customer.CustomerPhone</h4>
     <h4>@localizer["customerCompany"]: @customer.CustomerCompany</h4>
     <h4>@localizer["customerEmail"]: @customer.CustomerEmail</h4>
+    <br />
+    <a class="btn btn-wide btn-outline-secondary" @onclick="() => ClearCustomer()">@localizer["clear"]</a>
+    <br />
 }
 
 <br />
@@ -118,10 +122,10 @@
                             <tr data-toggle="collapse" class="@NavMenuCssClass">
                                 <td>@item.SaleProduct.ProductName</td>
                                 <td>@item.SaleProduct.ProductOrigin</td>
-                                <td>@item.SaleTxnQty</td>
+                                <td>@displayStockValue(item.SaleTxnQty, storeInfo.StoreUnit)</td>
                                 <td>$@item.SaleProduct.ProductPrice</td>
                                 <td>$@item.CalculateSubTotal()</td>
-                                <td>@displayItemStatus(item.SaleTxnStatus)</td>
+                                <td>@displayItemStatus(item.SaleTxnStatus): @displayStockValue(item.SaleReceivedQty, storeInfo.StoreUnit)</td>
                                 @switch (item.SaleTxnStatus)
                                 {
                                     case 0:
@@ -150,6 +154,7 @@
 @code {
     List<Product> productModel;
     Product productEntity = new Product();
+    Store storeInfo;
 
     List<SaleTxn> saleTxnModel;
     List<Customer> customerModel;
@@ -186,6 +191,13 @@
         IsShow2 = !IsShow2;
     }
 
+    private void ClearCustomer()
+    {
+        searchTerm = null;
+        customer = null;
+        StateHasChanged();
+    }
+
 
     protected void FilterClear()
     {
@@ -195,11 +207,17 @@
 
     protected override async Task OnInitializedAsync()
     {
+        storeInfo = await storeManager.GetById(1);
+
         //display total page buttons
         if (orderModel == null)
             orderModel = new List<Order>();
 
         orderModel = await orderManager.SimplyListAll();
+        foreach (Order temp in orderModel)
+        {
+            temp.OrderCustomer = await customerManager.GetById(temp.CustomerID);
+        }
     }
 
 
@@ -218,6 +236,10 @@
         saleTxnModel = null;
         orderModel = new List<Order>();
         orderModel = await orderManager.SimplyListAll(customer.ID);
+        foreach (Order temp in orderModel)
+        {
+            temp.OrderCustomer = await customerManager.GetById(temp.CustomerID);
+        }
     }
 
     public async void ToggleTableTr(int orderID)
@@ -252,7 +274,7 @@
         var parameters = new ModalParameters();
         parameters.Add(nameof(order), order);
 
-        var formModal = Modal.Show<SettleOrder>(localizer["settleOrder"],parameters);
+        var formModal = Modal.Show<SettleOrder>(localizer["settleOrder"], parameters);
         var result = await formModal.Result;
 
         if (result.Cancelled)
@@ -261,6 +283,11 @@
         }
         else
         {
+            Order temp = (Order)result.Data;
+            temp.UpdatedBy = "Stanley";
+            temp.UpdatedDateTime = DateTime.Now;
+            orderManager.Update(temp).Wait();
+            StateHasChanged();
         }
     }
 
@@ -269,7 +296,7 @@
         var parameters = new ModalParameters();
         parameters.Add(nameof(item), item);
 
-        var formModal = Modal.Show<DeliveryItem>(localizer["itemDelivery"],parameters);
+        var formModal = Modal.Show<DeliveryItem>(localizer["DeliveryItem"], parameters);
         var result = await formModal.Result;
 
         if (result.Cancelled)
@@ -278,6 +305,25 @@
         }
         else
         {
+            SaleTxn temp = (SaleTxn)result.Data;
+            temp.UpdatedBy = "Stanley";
+            temp.UpdatedDateTime = DateTime.Now;
+            saleManager.Update(temp).Wait();
+            StateHasChanged();
+        }
+    }
+
+    public string displayStockValue(double stock, int unitType)
+    {
+        Dictionary<string, double> temp = BlazorCRUD1.Resources.Utils.Utils.convertStockUnit(stock, unitType);
+        switch (unitType)
+        {
+            case 0:
+                return temp["stock"] + localizer["kg"];
+            case 1:
+                return temp["stock"] + localizer["gun"];
+            default:
+                return temp["stock"].ToString();
         }
     }
 }

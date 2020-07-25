@@ -1,7 +1,9 @@
-CREATE PROCEDURE [dbo].[SP_Update_Store] 
+CREATE PROCEDURE [dbo].[SP_Update_Store2] 
 		@ID 				INT,   
 		@StoreName 			NVARCHAR(250),
 		@StoreAddress		NVARCHAR (255) 	,
+		@StoreAddress2		NVARCHAR (255) 	,
+		@StoreAddress3		NVARCHAR (255) 	,
 		@StoreLocalPhone	NVARCHAR (255)  ,
 		@StoreMobilePhone	NVARCHAR (255)  ,
 		@StoreFax			NVARCHAR (255)  ,
@@ -9,26 +11,26 @@ CREATE PROCEDURE [dbo].[SP_Update_Store]
 		@StoreBANKAC2		NVARCHAR (255)  ,
 		@StoreBANKAC3		NVARCHAR (255)  ,
 		@StoreEmail			NVARCHAR (255)  ,
-		@StoreUnit			INT DEFAULT 0,
-		@StoreItemPerPage	INT DEFAULT 10,
+		@StoreUnit			INT ,
+		@StoreItemPerPage	INT 
 	AS    
 		BEGIN    
 
 		UPDATE [Store] SET
-			StoreName 		 = @StoreName 				
-			StoreAddress	 = @StoreAddress	
-			StoreLocalPhone  = @StoreLocalPhone 
-			StoreMobilePhone = @StoreMobilePhone
-			StoreFax		 = @StoreFax		
-			StoreBANKAC1	 = @StoreBANKAC1	
-			StoreBANKAC2	 = @StoreBANKAC2	
-			StoreBANKAC3	 = @StoreBANKAC3	
-			StoreEmail		 = @StoreEmail		
-			StoreUnit		 = @StoreUnit		
+			StoreName 		 = @StoreName, 				
+			StoreAddress	 = @StoreAddress,	
+			StoreAddress2	 = @StoreAddress2,	
+			StoreAddress3	 = @StoreAddress3,	
+			StoreLocalPhone  = @StoreLocalPhone, 
+			StoreMobilePhone = @StoreMobilePhone,
+			StoreFax		 = @StoreFax,		
+			StoreBANKAC1	 = @StoreBANKAC1,	
+			StoreBANKAC2	 = @StoreBANKAC2,	
+			StoreBANKAC3	 = @StoreBANKAC3,	
+			StoreEmail		 = @StoreEmail,		
+			StoreUnit		 = @StoreUnit,		
 			StoreItemPerPage = @StoreItemPerPage
 		
 		WHERE ID = @ID 
 	           
 		END;
-
-		//"Server=tcp:azure-test-cpeg.database.windows.net,1433;Initial Catalog=AzureTestDB;Persist Security Info=True;User ID=samsonchan;Password=samgorisGOOD123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"

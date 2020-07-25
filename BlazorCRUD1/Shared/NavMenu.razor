@@ -1,6 +1,8 @@
 ﻿@inject IStoreManager storeManager
 @inject IStringLocalizer<NavMenu> localizer
 
+<Title>Web POS Service</Title>
+
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">@storeInfo.StoreName</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -10,29 +12,31 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
+        <!--Index.razor-->
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href=""  Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> @localizer["login"]
             </NavLink>
         </li>
+        <!--FetchSale.razor-->
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="saleslist">
                 <span class="oi oi-home" aria-hidden="true"></span> @localizer["sale"]
             </NavLink>
         </li>
-
+        <!--FetchProduct.razor-->
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="productlist">
                 <span class="oi oi-plus" aria-hidden="true"></span> @localizer["product"]
             </NavLink>
         </li>
-
+        <!--FetchCustomer.razor-->
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="customerlist">
                 <span class="oi oi-plus" aria-hidden="true"></span> @localizer["customer"]
             </NavLink>
         </li>
-
+        <!--TxnRecord.razor-->
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="txnRecord">
                 <span class="oi oi-plus" aria-hidden="true"></span> @localizer["txnRecord"]

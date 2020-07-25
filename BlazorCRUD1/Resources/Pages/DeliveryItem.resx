@@ -117,61 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="action" xml:space="preserve">
-    <value>功能</value>
+  <data name="gun" xml:space="preserve">
+    <value>斤</value>
   </data>
-  <data name="addNewProduct" xml:space="preserve">
-    <value>新增貨品</value>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="clear" xml:space="preserve">
-    <value>清除</value>
-  </data>
-  <data name="delete" xml:space="preserve">
-    <value>停售</value>
-  </data>
-  <data name="deleteProduct" xml:space="preserve">
-    <value>停售貨品</value>
-  </data>
-  <data name="edit" xml:space="preserve">
-    <value>修改</value>
-  </data>
-  <data name="editProduct" xml:space="preserve">
-    <value>修改貨品</value>
-  </data>
-  <data name="filter" xml:space="preserve">
-    <value>篩選器</value>
-  </data>
-  <data name="ID" xml:space="preserve">
-    <value>編號</value>
-  </data>
-  <data name="inStock" xml:space="preserve">
-    <value>存貨</value>
-  </data>
-  <data name="next" xml:space="preserve">
-    <value>下一頁</value>
-  </data>
-  <data name="noProduct" xml:space="preserve">
-    <value>沒有貨品上架</value>
-  </data>
-  <data name="prev" xml:space="preserve">
-    <value>上一頁</value>
-  </data>
-  <data name="productDetails" xml:space="preserve">
-    <value>貨品資訊</value>
+  <data name="confirm" xml:space="preserve">
+    <value>Confirm</value>
   </data>
   <data name="productName" xml:space="preserve">
-    <value>貨品名稱</value>
+    <value>Product Name</value>
   </data>
-  <data name="productOrigin" xml:space="preserve">
-    <value>貨品產地</value>
+  <data name="receivedOrderQty" xml:space="preserve">
+    <value>Order Received QTY</value>
   </data>
-  <data name="productPrice" xml:space="preserve">
-    <value>單位售價</value>
+  <data name="remainQty" xml:space="preserve">
+    <value>Collect QTY</value>
   </data>
-  <data name="to" xml:space="preserve">
-    <value>至</value>
-  </data>
-  <data name="totalStock" xml:space="preserve">
-    <value>總存貨量</value>
+  <data name="totalOrderQty" xml:space="preserve">
+    <value>Order Total QTY</value>
   </data>
 </root>

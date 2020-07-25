@@ -1,0 +1,77 @@
+﻿@page "/storeInfo"
+@inject IStoreManager storeManager
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<StoreInfo> localizer
+
+<label for="StoreName">@localizer["storeName"]</label>
+<input id="StoreName" name="StoreName" type="text" @bind="storeInfo.StoreName" @bind:event="oninput" class="form-control">
+
+<label for="StoreAddress1">@localizer["storeAddressLine1"]</label>
+<input id="StoreAddress1" name="StoreAddress1" type="text" @bind="storeInfo.StoreAddress" @bind:event="oninput" class="form-control">
+
+<label for="StoreAddress2">@localizer["storeAddressLine2"]</label>
+<input id="StoreAddress2" name="StoreAddress2" type="text" @bind="storeInfo.StoreAddress2" @bind:event="oninput" class="form-control">
+
+<label for="StoreAddress3">@localizer["storeAddressLine3"]</label>
+<input id="StoreAddress3" name="StoreAddress3" type="text" @bind="storeInfo.StoreAddress3" @bind:event="oninput" class="form-control">
+
+<label for="StoreLocalPhone">@localizer["storeLocalPhone"]</label>
+<input id="StoreLocalPhone" name="StoreLocalPhone" type="text" @bind="storeInfo.StoreLocalPhone" @bind:event="oninput" class="form-control">
+
+<label for="StoreMobilePhone">@localizer["storeMobilePhone"]</label>
+<input id="StoreMobilePhone" name="StoreMobilePhone" type="text" @bind="storeInfo.StoreMobilePhone" @bind:event="oninput" class="form-control">
+
+<label for="StoreFax">@localizer["storeFax"]</label>
+<input id="StoreFax" name="StoreFax" type="text" @bind="storeInfo.StoreFax" @bind:event="oninput" class="form-control">
+
+<label for="StoreEmail">@localizer["storeEmail"]</label>
+<input id="StoreEmail" name="StoreEmail" type="text" @bind="storeInfo.StoreEmail" @bind:event="oninput" class="form-control">
+
+<label for="StoreBANKAC1">@localizer["storeBANKAC1"]</label>
+<input id="StoreBANKAC1" name="StoreBANKAC1" type="text" @bind="storeInfo.StoreBANKAC1" @bind:event="oninput" class="form-control">
+
+<label for="StoreBANKAC2">@localizer["storeBANKAC2"]</label>
+<input id="StoreBANKAC2" name="StoreBANKAC2" type="text" @bind="storeInfo.StoreBANKAC2" @bind:event="oninput" class="form-control">
+
+<label for="StoreBANKAC3">@localizer["storeBANKAC3"]</label>
+<input id="StoreBANKAC3" name="StoreBANKAC3" type="text" @bind="storeInfo.StoreBANKAC3" @bind:event="oninput" class="form-control">
+
+<br />
+<label for="StoreUnit">@localizer["storeUnit"]</label>
+<select @bind="storeInfo.StoreUnit">
+    <option value="0">@localizer["gin"]</option>
+    <option value="1">@localizer["kg"]</option>
+</select>
+<br />
+
+<label for="StoreItemPerPage">@localizer["storeItemPerPage"]</label>
+<input id="StoreItemPerPage" name="StoreItemPerPage" type="text" @bind="storeInfo.StoreItemPerPage" @bind:event="oninput" class="form-control">
+
+<br />
+<br />
+
+<a class="btn btn-primary" @onclick="() => UpdateStoreInfo(storeInfo)">@localizer["save"]</a>
+<a class="btn btn-danger" @onclick="() => NavigateToMainPage()">@localizer["back"]</a>
+
+<br />
+<br />
+
+@code {
+    Store storeInfo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        storeInfo = await storeManager.GetById(1);
+    }
+
+    public async void UpdateStoreInfo(Store storeInfo)
+    {
+        await storeManager.Update(storeInfo);
+        NavigateToMainPage();
+    }
+
+    public void NavigateToMainPage()
+    {
+        NavigationManager.NavigateTo("/saleslist", true);
+    }
+}

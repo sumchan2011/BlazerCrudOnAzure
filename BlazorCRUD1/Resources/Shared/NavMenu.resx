@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="login" xml:space="preserve">
-    <value>LOGIN</value>
-  </data>
   <data name="customer" xml:space="preserve">
     <value>CUSTOMER LIST</value>
   </data>
@@ -130,6 +127,6 @@
     <value>SALE</value>
   </data>
   <data name="txnRecord" xml:space="preserve">
-    <value>TXN LIST</value>
+    <value>TXN RECORD</value>
   </data>
 </root>

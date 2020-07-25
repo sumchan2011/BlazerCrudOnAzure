@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@inject IStringLocalizer<MainLayout> localizer
+
+<Title>Web POS Service</Title>
 
 <div class="sidebar">
     <NavMenu />
@@ -7,9 +10,9 @@
 <div class="main">
     <div class="top-row px-4">
         <!--Put button/Tap in this div for horizontal orientation-->
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">Register</a>
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">Login</a>
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">@localizer["register"]</a>
+        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">@localizer["login"]</a>
+        <NavLink class="nav-link" href="storeInfo">@localizer["about"]</NavLink>
     </div>
 
     <div class="content px-4">

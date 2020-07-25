@@ -1,41 +1,57 @@
 ﻿@page "/deliveryItem"
 @inject IProductManager productManager
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
-@inject IStringLocalizer<AddStock> localizer
+@inject IStringLocalizer<DeliveryItem> localizer
 
 <div class="row">
     <div class="col-md-4">
         <form>
             <div class="form-group">
 
-                <label for="Name" class="control-label">@product.ProductName</label>
+                <label for="Name" class="control-label">@localizer["productName"]</label>
+                <label>@item.SaleProduct.ProductName</label>
 
-                <label for="Name" class="control-label">@localizer["stockCost"]</label>
-                <input for="Name" class="form-control" @bind-value="@stock.StockCost" />
+                <label for="Name" class="control-label">@localizer["totalOrderQty"]</label>
+                <label>@item.SaleTxnQty</label>
 
-                <label for="Name" class="control-label">@localizer["stockQTY"]</label>
-                <input for="Name" class="form-control" @bind-value="@stock.StockQty" />
+                <label for="Name" class="control-label">@localizer["receivedOrderQty"]</label>
+                <label>@item.SaleReceivedQty</label>
 
+                <br />
+                <label for="number" class="control-label">@localizer["remainQty"]</label>
+                <input type="number" step="0.01" max="@item.CalculateCollectQty()" @bind-value="collectQty">
 
 
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" @onclick="() => ConfirmedUpdate()">@localizer["confirm"]</button>
+                <button type="submit" class="btn btn-primary" @onclick="() => ConfirmedUpdate()">@localizer["confirm"]</button>
                 <button type="button" class="btn btn-danger" @onclick="() => Cancel()">@localizer["cancel"]</button>
             </div>
         </form>
     </div>
 </div>
 
+
+
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
-    [Parameter] public Product product { get; set; }
-    Stock stock = new Stock();
+    [Parameter] public SaleTxn item { get; set; }
+    private double collectQty { get; set; }
 
     void ConfirmedUpdate()
     {
-        stock.ProductID = product.ID;
-        BlazoredModal.Close(ModalResult.Ok(stock));
+        if(collectQty > item.CalculateCollectQty())
+        {
+            return;
+        }
+        else
+        {
+            item.SaleReceivedQty += collectQty;
+            if (item.SaleReceivedQty == item.SaleTxnQty)
+                item.SaleTxnStatus = 0;
+            BlazoredModal.Close(ModalResult.Ok(item));
+        }
+
     }
 
     void Cancel()

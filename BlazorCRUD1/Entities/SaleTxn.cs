@@ -37,5 +37,10 @@ namespace BlazorCRUD1.Entities
                 SaleTxnStatus = 0;
         }
 
+        public double CalculateCollectQty()
+        {
+            return SaleTxnQty - SaleReceivedQty;
+        }
+
     }
 }

@@ -1,0 +1,25 @@
+CREATE PROCEDURE [dbo].[SP_Update_Order] 
+		@ID 				INT,   
+		@CustomerID 		INT,
+		@OrderTxnType		INT,
+		@OrderTotalAmt		DECIMAL (20, 6) DEFAULT ((0)),
+		@OrderNetAmt		DECIMAL (20, 6) DEFAULT ((0)),
+		@OrderDepositAmt	DECIMAL (20, 6) DEFAULT ((0)),
+		@DELETED			BIT,
+		@UpdatedDateTime	DATETIME,
+		@UpdatedBy			NVARCHAR (255)
+	AS    
+		BEGIN    
+
+		UPDATE [Order] SET
+			CustomerID 		= @CustomerID, 	
+			OrderTxnType	= @OrderTxnType,	
+			OrderTotalAmt	= @OrderTotalAmt,	
+			OrderNetAmt		= @OrderNetAmt,	
+			OrderDepositAmt	= @OrderDepositAmt,
+			DELETED			= @DELETED,		
+			UpdatedDateTime	= @UpdatedDateTime,
+			UpdatedBy		= @UpdatedBy		
+		WHERE ID = @ID 
+	           
+		END;

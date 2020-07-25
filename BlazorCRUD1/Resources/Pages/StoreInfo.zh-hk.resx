@@ -117,61 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="action" xml:space="preserve">
-    <value>Action</value>
+  <data name="back" xml:space="preserve">
+    <value>返回</value>
   </data>
-  <data name="addNewProduct" xml:space="preserve">
-    <value>Add New Product</value>
+  <data name="gin" xml:space="preserve">
+    <value>斤</value>
   </data>
-  <data name="clear" xml:space="preserve">
-    <value>Clear</value>
+  <data name="kg" xml:space="preserve">
+    <value>公斤</value>
   </data>
-  <data name="delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="save" xml:space="preserve">
+    <value>儲存並返回</value>
   </data>
-  <data name="deleteProduct" xml:space="preserve">
-    <value>Delete Product</value>
+  <data name="storeAddressLine1" xml:space="preserve">
+    <value>地址第一行</value>
   </data>
-  <data name="edit" xml:space="preserve">
-    <value>EDIT</value>
+  <data name="storeAddressLine2" xml:space="preserve">
+    <value>地址第二行</value>
   </data>
-  <data name="editProduct" xml:space="preserve">
-    <value>Edit Product</value>
+  <data name="storeAddressLine3" xml:space="preserve">
+    <value>地址第三行</value>
   </data>
-  <data name="filter" xml:space="preserve">
-    <value>Filter</value>
+  <data name="storeBANKAC1" xml:space="preserve">
+    <value>銀行戶口號碼 1</value>
   </data>
-  <data name="ID" xml:space="preserve">
-    <value>ID</value>
+  <data name="storeBANKAC2" xml:space="preserve">
+    <value>銀行戶口號碼 2</value>
   </data>
-  <data name="inStock" xml:space="preserve">
-    <value>In Stock</value>
+  <data name="storeBANKAC3" xml:space="preserve">
+    <value>銀行戶口號碼 3</value>
   </data>
-  <data name="next" xml:space="preserve">
-    <value>Next</value>
+  <data name="storeEmail" xml:space="preserve">
+    <value>電郵地址</value>
   </data>
-  <data name="noProduct" xml:space="preserve">
-    <value>No Active Product</value>
+  <data name="storeFax" xml:space="preserve">
+    <value>傳真號碼</value>
   </data>
-  <data name="prev" xml:space="preserve">
-    <value>Prev</value>
+  <data name="storeItemPerPage" xml:space="preserve">
+    <value>每頁顯示數量</value>
   </data>
-  <data name="productDetails" xml:space="preserve">
-    <value>Details</value>
+  <data name="storeLocalPhone" xml:space="preserve">
+    <value>電話號碼</value>
   </data>
-  <data name="productName" xml:space="preserve">
-    <value>Product Name</value>
+  <data name="storeMobilePhone" xml:space="preserve">
+    <value>手提電話號碼</value>
   </data>
-  <data name="productOrigin" xml:space="preserve">
-    <value>Product Origin</value>
+  <data name="storeName" xml:space="preserve">
+    <value>商戶名稱</value>
   </data>
-  <data name="productPrice" xml:space="preserve">
-    <value>Unit Price</value>
-  </data>
-  <data name="to" xml:space="preserve">
-    <value>TO</value>
-  </data>
-  <data name="totalStock" xml:space="preserve">
-    <value>Total Stock</value>
+  <data name="storeUnit" xml:space="preserve">
+    <value>貨品顯示單位</value>
   </data>
 </root>

@@ -9,6 +9,8 @@ namespace BlazorCRUD1.Entities
     {
         public string StoreName { get; set; }
         public string StoreAddress { get; set; }
+        public string StoreAddress2 { get; set; }
+        public string StoreAddress3 { get; set; }
         public string StoreLocalPhone { get; set; }
         public string StoreMobilePhone { get; set; }
         public string StoreFax { get; set; }

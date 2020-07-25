@@ -15,7 +15,7 @@
                 <label for="Name" class="control-label">$@order.OrderDepositAmt</label>
 
                 <label for="number" class="control-label">@localizer["remainAmt"]</label>
-                <input type="number" step="0.01" max="@order.calculateRemainPayAmount()">
+                <input type="number" step="0.01" max="@order.calculateRemainPayAmount()" @bind-value="depositeAmt">
 
             </div>
             <div class="form-group">
@@ -30,12 +30,24 @@
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
     [Parameter] public Order order { get; set; }
 
-    protected async Task ConfirmedUpdate()
+    private double depositeAmt { get; set; }
+
+    void ConfirmedUpdate()
     {
-        //BlazoredModal.Close(ModalResult.Ok(order));
+        //add deposite amt should not greater than remain deposite
+        if(depositeAmt > order.calculateRemainPayAmount())
+        {
+            return;
+        }
+        else
+        {
+            //add to total deposite and then return to save
+            order.OrderDepositAmt += depositeAmt;
+            BlazoredModal.Close(ModalResult.Ok(order));
+        }
     }
 
-    protected async Task Cancel()
+    void Cancel()
     {
         BlazoredModal.Cancel();
     }
