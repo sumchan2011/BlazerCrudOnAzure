@@ -5,7 +5,7 @@
 @inject IOrderManager orderManager
 @inject IModalService Modal
 @inject IStoreManager storeManager
-@inject IStringLocalizer<TxnRecord> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 
 <div class="row col-md-3 pull-right">
     <input type="text" id="txtSearch" placeholder=@localizer["searchByPhone"] class="form-control" @bind="CustomerID" @bind:event="oninput" />
@@ -166,7 +166,7 @@
     bool collapseNavMenu = true;
     string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
     int selectedindex;
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     private string searchTerm;
     private string CustomerID
     {
@@ -208,6 +208,7 @@
     protected override async Task OnInitializedAsync()
     {
         storeInfo = await storeManager.GetById(1);
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
 
         //display total page buttons
         if (orderModel == null)

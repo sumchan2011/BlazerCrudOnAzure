@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[SP_Update_Store2] 
+CREATE PROCEDURE [dbo].[SP_Update_Store3] 
 		@ID 				INT,   
 		@StoreName 			NVARCHAR(250),
 		@StoreAddress		NVARCHAR (255) 	,
@@ -12,7 +12,8 @@ CREATE PROCEDURE [dbo].[SP_Update_Store2]
 		@StoreBANKAC3		NVARCHAR (255)  ,
 		@StoreEmail			NVARCHAR (255)  ,
 		@StoreUnit			INT ,
-		@StoreItemPerPage	INT 
+		@StoreItemPerPage	INT ,
+		@StoreLanguage		INT
 	AS    
 		BEGIN    
 
@@ -29,7 +30,8 @@ CREATE PROCEDURE [dbo].[SP_Update_Store2]
 			StoreBANKAC3	 = @StoreBANKAC3,	
 			StoreEmail		 = @StoreEmail,		
 			StoreUnit		 = @StoreUnit,		
-			StoreItemPerPage = @StoreItemPerPage
+			StoreItemPerPage = @StoreItemPerPage,
+			StoreLanguage	 = @StoreLanguage		
 		
 		WHERE ID = @ID 
 	           

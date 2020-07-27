@@ -49,13 +49,8 @@ namespace BlazorCRUD1
             services.AddBlazoredModal();
             services.AddHeadElementHelper();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            var supportedCultures = new List<CultureInfo> {  new CultureInfo("zh-hk"), new CultureInfo("en") };
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("zh-hk");
-                options.SupportedUICultures = supportedCultures;
-            });
+
+            services.AddI18nText();
 
         }
 

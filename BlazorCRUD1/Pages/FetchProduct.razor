@@ -1,7 +1,7 @@
 ﻿@page "/productlist"
 @inject IProductManager productManager
 @inject IStockManager stockManager
-@inject IStringLocalizer<FetchProduct> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject IModalService Modal
 @inject IStoreManager storeManager
 
@@ -125,7 +125,7 @@ else
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductName</td>
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductOrigin</td>
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">$@product.ProductPrice</td>
-                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@displayStockValue(product.ProductTotalStock,storeInfo.StoreUnit)</td>
+                        <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@displayStockValue(product.ProductTotalStock, storeInfo.StoreUnit)</td>
                         <td data-toggle="collapse" class="clickable" @onclick="() => ToggleTableTr(product.ID)">@product.ProductDetails</td>
                         <td>
                             <!-- <a class="btn btn-primary" href='/editProduct/@product.ID'>@localizer["edit"]</a>-->
@@ -195,7 +195,7 @@ else
     List<Product> productModel;
     List<Stock> stockModel;
     Store storeInfo;
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     #region Pagination
     int totalPages;
     int totalRecords;
@@ -273,6 +273,7 @@ else
         curPage = 1;
         storeInfo = await storeManager.GetById(1);
         productModel = await productManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
         totalRecords = await productManager.Count(productName);
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
         SetPagerSize("forward");
@@ -405,7 +406,7 @@ else
 
     public string displayStockValue(double stock, int unitType)
     {
-        Dictionary<string,double> temp = BlazorCRUD1.Resources.Utils.Utils.convertStockUnit(stock, unitType);
+        Dictionary<string, double> temp = BlazorCRUD1.Resources.Utils.Utils.convertStockUnit(stock, unitType);
         switch (unitType)
         {
             case 0:

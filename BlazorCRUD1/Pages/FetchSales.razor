@@ -5,7 +5,7 @@
 @inject ICustomerManager customerManager
 @inject IOrderManager orderManager
 @inject IModalService Modal
-@inject IStringLocalizer<Index> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject IStoreManager storeManager
 
 <div class="search-wrapper">
@@ -131,7 +131,8 @@
     <h4>@localizer["customerEmail"]: @orderEntity.OrderCustomer.CustomerEmail</h4>
     <br />
     <a class="btn btn-wide btn-outline-secondary" @onclick="() => ClearCustomer()">@localizer["clear"]</a>
-    <br /><br />
+    <br />
+    <br />
 
 }
 
@@ -233,7 +234,7 @@ else
     List<Product> productModel;
     Product productEntity = new Product();
     Store storeInfo;
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     List<SaleTxn> saleTxnModel;
     List<Customer> customerModel;
 
@@ -313,6 +314,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         storeInfo = await storeManager.GetById(1);
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
     }
 
     protected async Task FilterProduct(String name, String origin, String lowerAmt, String upperAmt)

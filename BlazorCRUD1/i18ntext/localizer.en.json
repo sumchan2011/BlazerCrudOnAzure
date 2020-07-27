@@ -1,0 +1,112 @@
+﻿{
+
+	"cancel":				"Cancel",  
+	"confirm":				"Confirm",
+	"customerCompany":		"Company",
+	"customerEmail":		"Email",
+	"customerName":			"Name",
+	"customerPhone":		"Phone",
+	"productDetails":		"Details",
+	"productName"	:		"Product Name",
+	"productOrigin"	:		"Product Origin",
+	"productPrice"	:		"Unit Price",
+	
+	"stockCost":			"Cost",
+	"stockQTY":				"Qty",
+	
+	"adjustedTotalAmount":	"Adjusted Amount",
+	"allowAdjust":			"Adjustment",
+	"depositeAmt":			"Deposite",
+	"totalAmount":			"Total Amount",
+	
+	"deleteProduct":		"Delete Product",
+	"productName":			"Product Name",
+	"productPrice":			"Unit Price",
+
+	"receivedOrderQty":		"Order Received QTY",
+	"remainQty":			"Collect QTY",
+	"totalOrderQty":		"Order Total QTY",
+	
+	"action":				"Action",
+	"addCustomer":			"Add New Customer",
+	"delete":				"Delete",
+	"edit":					"Edit",
+	"editCustomer":			"Edit Customer Info",
+	"next":					"Next",
+	"noCustomer":			"No Customer Record",
+	"prev":					"Prev",
+	"searchByPhone":		"Search By Phone",
+	
+	"addNewProduct":        "Add New Product",
+	"addStock":             "Add Stock",
+	"clear":                "Clear",
+	"editProduct":          "Edit Product",
+	"filter":               "Filter",
+	"ID":                   "ID",
+	"inStock":              "In Stock",
+	"noProduct":            "No Active Product",
+	"stockCost":            "Cost",
+	"stockDate":            "Stock Date",
+	"stockQTY":             "QTY",
+	"to":                   "TO",
+	"totalStock":           "Total Stock",
+	
+	"allDelivery":          "All Received",
+	"buy":                  "Order",
+	"login":                "Login",
+	"noDelivery":           "Not Received",
+	"noOrder":              "No Order Details",
+	"orderDetails":         "Order Details",
+	"partialDelivery":      "Partial Recevied",
+	"qty":                  "QTY",
+	"select":               "Select",
+	"status":               "Order Status",
+	"subTotal":             "Sub Total",
+	
+	"remainAmt":			"Remain Amount",
+	
+	"DeliveryItem":			"Item Delivery",
+	"itemDelivery":         "Delivery",
+	"noItem":               "No Order Item",
+	"orderID":              "Order ID",
+	"orderType":            "Order Type",
+	"settled":              "Order Settled",
+	"settleOrder":          "Settle Order",
+	
+	"back":					"Back"	,
+	"english":				"English"	,
+	"gin":					"斤",
+	"kg":					"KG"	,
+	"save":					"Save and Return"	,
+	"storeAddressLine1":	"Store Address Line 1"	,
+	"storeAddressLine2":	"Store Address Line 2"	,
+	"storeAddressLine3":	"Store Address Line 3"	,
+	"storeBANKAC1":			"Store Bank A/C 1"	,
+	"storeBANKAC2":			"Store Bank A/C 2"	,
+	"storeBANKAC3":			"Store Bank A/C 3"	,
+	"storeEmail":			"Store Email"	,
+	"storeFax":				"Store Fax"    ,
+	"storeItemPerPage":		"Display Item/Page"    ,
+	"storeLanguage":		"Display Lanugage",
+	"storeLocalPhone":		"Store Phone"	,
+	"storeMobilePhone":		"Store Mobile Phone"    ,
+	"storeName":			"Store Name"    ,
+	"storeUnit":			"Unit"	,
+	"tradChinese":			"繁體中文"    ,
+	
+	"about":	"STORE INFO",
+	"login":	"LOGIN",
+	"register":	"REGISTER",
+	
+	
+	"customer":				"CUSTOMER LIST",
+	"home":					"HOME",
+	"product":				"PRODUCT LIST",
+	"sale":					"SALE",
+	"txnRecord":			"TXN RECORD"
+}
+
+
+
+
+

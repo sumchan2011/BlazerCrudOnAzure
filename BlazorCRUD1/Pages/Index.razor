@@ -5,38 +5,37 @@
 @inject ICustomerManager customerManager
 @inject IOrderManager orderManager
 @inject IModalService Modal
-@inject IStringLocalizer<Index> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject IStoreManager storeManager
 @inject IUserManager userManager
 
 <p>Login Page </p>
 @if (auth)
 {
-    <p>@welcomeMessage</p>
-}
+<p>@welcomeMessage</p>}
 @if (!auth)
 {
-    <form id="list-table-search-form" class="search-form" action="" method="post">
-        <div class="form-group">
-            <label for="userName">@localizer["userName"]</label>
-            <input id="userName" name="userName" type="text" @bind="u.UserName" @bind:event="oninput" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="password">@localizer["password"]</label>
-            <input id="password" name="password" type="text" @bind="u.PasswordHash" @bind:event="oninput" class="form-control">
-        </div>
+<form id="list-table-search-form" class="search-form" action="" method="post">
+    <div class="form-group">
+        <label for="userName">@localizer["userName"]</label>
+        <input id="userName" name="userName" type="text" @bind="u.UserName" @bind:event="oninput" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="password">@localizer["password"]</label>
+        <input id="password" name="password" type="text" @bind="u.PasswordHash" @bind:event="oninput" class="form-control">
+    </div>
 
-        <div class="form-group">
-            <button type="button" class="btn btn-primary" @onclick="() => login()">Login</button>
-        </div>
-    </form>}
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" @onclick="() => login()">Login</button>
+    </div>
+</form>}
 
 
-@code {
+@code { 
     bool auth = false;
     String welcomeMessage = "";
     int userId = 10;
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     User u = new User();
 
     async void login()
@@ -48,7 +47,10 @@
     }
 
 
-
+    protected override async Task OnInitializedAsync()
+    {
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
+    }
     //protected async Task CreateArticle()
     //{
     //    await articleManager.Create(article);
@@ -58,5 +60,5 @@
     //void cancel()
     //{
     //    navigationManager.NavigateTo("/articlelist");
-    //}
+    //} }
 }

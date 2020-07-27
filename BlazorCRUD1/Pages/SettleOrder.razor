@@ -1,7 +1,7 @@
 ﻿@page "/settleOrder"
 @inject IProductManager productManager
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
-@inject IStringLocalizer<SettleOrder> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 
 <div class="row">
     <div class="col-md-4">
@@ -29,13 +29,16 @@
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
     [Parameter] public Order order { get; set; }
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     private double depositeAmt { get; set; }
-
+    protected override async Task OnInitializedAsync()
+    {
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
+    }
     void ConfirmedUpdate()
     {
         //add deposite amt should not greater than remain deposite
-        if(depositeAmt > order.calculateRemainPayAmount())
+        if (depositeAmt > order.calculateRemainPayAmount())
         {
             return;
         }

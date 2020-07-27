@@ -1,7 +1,7 @@
 ﻿@page "/storeInfo"
 @inject IStoreManager storeManager
 @inject NavigationManager NavigationManager
-@inject IStringLocalizer<StoreInfo> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 
 <label for="StoreName">@localizer["storeName"]</label>
 <input id="StoreName" name="StoreName" type="text" @bind="storeInfo.StoreName" @bind:event="oninput" class="form-control">
@@ -48,6 +48,13 @@
 <input id="StoreItemPerPage" name="StoreItemPerPage" type="text" @bind="storeInfo.StoreItemPerPage" @bind:event="oninput" class="form-control">
 
 <br />
+<label for="StoreUnit">@localizer["storeLanguage"]</label>
+<select @bind="Selected">
+    <option value="0">@localizer["english"]</option>
+    <option value="1">@localizer["tradChinese"]</option>
+</select>
+<br />
+<br />
 <br />
 
 <a class="btn btn-primary" @onclick="() => UpdateStoreInfo(storeInfo)">@localizer["save"]</a>
@@ -58,10 +65,31 @@
 
 @code {
     Store storeInfo;
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
+    int _Selected;
+    private int Selected
+    {
+        get { return _Selected; }
+        set
+        {
+            _Selected = value;
+            storeInfo.StoreLanguage = _Selected; //store the captured value
+            var lang = I18nText.GetCurrentLanguageAsync();
+            switch (_Selected)
+            {
+                case 0:
+                    updateDisplayLanguage("en");
+                    break;
+                case 1:
+                    updateDisplayLanguage("zh-hk");
+                    break;
+            }
+        }
+    }
     protected override async Task OnInitializedAsync()
     {
         storeInfo = await storeManager.GetById(1);
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
     }
 
     public async void UpdateStoreInfo(Store storeInfo)
@@ -73,5 +101,11 @@
     public void NavigateToMainPage()
     {
         NavigationManager.NavigateTo("/saleslist", true);
+    }
+
+    private async void updateDisplayLanguage(string code)
+    {
+        await I18nText.SetCurrentLanguageAsync(code);
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
     }
 }

@@ -42,7 +42,8 @@ namespace BlazorCRUD1.Concrete
             dbPara.Add("StoreEmail", store.StoreEmail, DbType.String);
             dbPara.Add("StoreUnit", store.StoreUnit, DbType.Int32);
             dbPara.Add("StoreItemPerPage", store.StoreItemPerPage, DbType.Int32);
-            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Store2]",
+            dbPara.Add("StoreLanguage", store.StoreLanguage, DbType.Int32);
+            var updateArticle = Task.FromResult(_dapperManager.Update<int>("[dbo].[SP_Update_Store3]",
                             dbPara,
                             commandType: CommandType.StoredProcedure));
             return updateArticle;

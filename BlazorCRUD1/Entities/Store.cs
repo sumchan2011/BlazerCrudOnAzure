@@ -20,5 +20,6 @@ namespace BlazorCRUD1.Entities
         public string StoreEmail { get; set; }
         public int StoreUnit { get; set; }
         public string StoreItemPerPage { get; set; }
+        public int StoreLanguage { get; set; }
     }
 }

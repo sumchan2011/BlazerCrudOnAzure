@@ -120,6 +120,9 @@
   <data name="back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="english" xml:space="preserve">
+    <value>English</value>
+  </data>
   <data name="gin" xml:space="preserve">
     <value>斤</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="storeItemPerPage" xml:space="preserve">
     <value>Display Item/Page</value>
   </data>
+  <data name="storeLanguage" xml:space="preserve">
+    <value>Display Lanugage</value>
+  </data>
   <data name="storeLocalPhone" xml:space="preserve">
     <value>Store Phone</value>
   </data>
@@ -167,5 +173,8 @@
   </data>
   <data name="storeUnit" xml:space="preserve">
     <value>Unit</value>
+  </data>
+  <data name="tradChinese" xml:space="preserve">
+    <value>繁體中文</value>
   </data>
 </root>

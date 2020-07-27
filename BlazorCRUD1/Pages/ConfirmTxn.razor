@@ -1,6 +1,6 @@
 ﻿@page "/confirmTxn"
 @inject IArticleManager articleManager
-@inject IStringLocalizer<ConfirmTxn> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
 <h3>@localizer["totalAmount"]: $@order.OrderTotalAmt</h3>
@@ -24,12 +24,14 @@
     Article article = new Article();
     [Parameter] public Order order { get; set; }
     String testing = "Default String";
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     public double paymentAmt { get; set; }
 
-    protected override void OnInitialized()
+
+    protected override async Task OnInitializedAsync()
     {
         paymentAmt = order.OrderNetAmt;
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
     }
 
     void ConfirmedOrder()

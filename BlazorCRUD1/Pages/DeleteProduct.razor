@@ -1,6 +1,6 @@
 ﻿@page "/deleteProduct"
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
-@inject IStringLocalizer<DeleteProduct> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 
 <h3>@localizer["productName"]: @product.ProductName</h3>
 <h3>@localizer["productPrice"]: @product.ProductPrice</h3>
@@ -12,11 +12,12 @@
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
     [Parameter] public Product product { get; set; }
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     public double paymentAmt { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
     }
 
     void ConfirmedDelete()

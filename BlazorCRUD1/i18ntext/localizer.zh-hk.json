@@ -1,0 +1,111 @@
+﻿{
+
+	"cancel":				"取消",
+	"confirm":              "確認",
+	"customerCompany":		"公司名稱",
+	"customerEmail":		"電郵地址",
+	"customerName":			"姓名",
+	"customerPhone":		"電話號碼",
+	
+	"productDetails":		"貨品資訊",
+	"productName"	:		"貨品名稱",
+	"productOrigin"	:		"貨品產地",
+	"productPrice"	:		"單位售價",
+	
+	"stockCost":			"總來貨價",
+	"stockQTY":				"存貨量",
+
+	"adjustedTotalAmount":	"調整後總金額",
+	"allowAdjust":			"調整訂單金額",
+	"depositeAmt":			"訂金",
+	"totalAmount":			"總金額",
+
+	"deleteProduct":		"停售貨品",
+	"productName":			"貨品名稱",
+	"productPrice":			"單位售價",
+
+	"receivedOrderQty":		"訂單已取貨量",
+	"remainQty":			"取貨量",
+	"totalOrderQty":		"訂單總貨量",
+	
+	"action":				"功能",
+	"addCustomer":			"新增顧客",
+	"delete":				"刪除",
+	"edit":					"修改",
+	"editCustomer":			"修改顧客資訊",
+	"next":					"下一頁",
+	"noCustomer":			"沒有顧客資訊",
+	"prev":					"上一頁",
+	"searchByPhone":		"以電話號碼搜索",	
+	
+	"addNewProduct":        "新增貨品",
+	"addStock":             "存貨",
+	"clear":                "清除",
+	"editProduct":          "修改貨品",
+	"filter":               "篩選器",
+	"ID":                   "ID",
+	"inStock":              "存貨",
+	"noProduct":            "沒有貨品上架",
+	"stockCost":            "總來貨價",
+	"stockDate":            "存貨日期",
+	"stockQTY":             "批次貨量",
+	"to":                   "至",
+	"totalStock":           "總存貨量",
+	
+	"allDelivery":          "全數已取",
+	"buy":                  "下單",
+	"login":                "登入",
+	"noDelivery":           "未取",
+	"noOrder":              "沒有訂單資訊",
+	"orderDetails":         "訂單資訊",
+	"partialDelivery":      "部份已取",
+	"qty":                  "數量",
+	"select":               "選擇",
+	"status":               "訂單狀態",
+	"subTotal":             "小計",
+	
+	"remainAmt":			"輸入餘額",
+	
+	"DeliveryItem":			"訂單取貨",
+	"itemDelivery":         "取貨",
+	"noItem":               "沒有訂購貨品",
+	"orderID":              "訂單編號",
+	"orderType":            "訂單類型",
+	"settled":              "訂單已結賑",
+	"settleOrder":          "結賑",
+	
+	"back":					"返回"           	,
+	"english":				"English"	    	,
+	"gin":					"斤"	            	,
+	"kg":					"公斤"	        	,
+	"save":					"儲存並返回"	    	,
+	"storeAddressLine1":	"地址第一行"			,
+	"storeAddressLine2":	"地址第二行"			,
+	"storeAddressLine3":	"地址第三行"			,
+	"storeBANKAC1":			"銀行戶口號碼 1"		,
+	"storeBANKAC2":			"銀行戶口號碼 2"		,
+	"storeBANKAC3":			"銀行戶口號碼 3"		,
+	"storeEmail":			"電郵地址"	        ,
+	"storeFax":				"傳真號碼"		    ,
+	"storeItemPerPage":		"每頁顯示數量"			,
+	"storeLanguage":		"顯示語言"	        ,
+	"storeLocalPhone":		"電話號碼"		    ,
+	"storeMobilePhone":		"手提電話號碼"			,
+	"storeName":			"商戶名稱"            ,
+	"storeUnit":			"貨品顯示單位"	        ,
+	"tradChinese":			"繁體中文"	        ,
+	
+	"about":	"商戶資訊",
+	"login":	"登入",
+	"register":	"注冊",
+	
+	"customer":				"顧客列表",
+	"home":					"主頁",
+	"product":				"貨物列表",
+	"sale":					"銷售",
+	"txnRecord":			"交易紀錄"
+}
+
+
+
+

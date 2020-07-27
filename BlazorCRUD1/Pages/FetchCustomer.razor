@@ -1,6 +1,6 @@
 ﻿@page "/customerlist"
 @inject ICustomerManager CustomerManager
-@inject IStringLocalizer<FetchCustomer> localizer
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject IModalService Modal
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -132,7 +132,7 @@ else
     int endPage;
     string sortColumnName = "ID";
     string sortDir = "DESC";
-
+    private BlazorCRUD1.I18nText.localizer localizer = new I18nText.localizer();
     #endregion
 
     protected override async Task OnInitializedAsync()
@@ -142,6 +142,7 @@ else
         pageSize = 5;
         curPage = 1;
         customerModel = await CustomerManager.ListAll(searchTerm);
+        localizer = await I18nText.GetTextTableAsync<I18nText.localizer>(this);
         totalRecords = await CustomerManager.Count(searchTerm);
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
         SetPagerSize("forward");
@@ -162,7 +163,7 @@ else
             temp.UpdatedBy = "Stanley";
             temp.UpdatedDateTime = DateTime.Now;
             CustomerManager.Create(temp).Wait();
-            customerModel = await CustomerManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir,"");
+            customerModel = await CustomerManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir, "");
             StateHasChanged();
         }
     }
