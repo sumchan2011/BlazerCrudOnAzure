@@ -25,4 +25,7 @@
     <PackageReference Include="Toolbelt.Blazor.I18nText" Version="9.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="sql\" />
+  </ItemGroup>
 </Project>
